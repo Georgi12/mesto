@@ -1,0 +1,24 @@
+.form__close {
+    background-image: url("../../../images/close-Icon.png");
+    min-width: 58px;
+    min-height: 58px;
+    padding: 0;
+    background-size: 100%;
+    background-color: none;
+    position: absolute;
+    right: -47px;
+    top: -43px;
+    border: none;
+    outline: none;
+    margin: 0;
+    z-index: 100;
+    background-color: rgba(0, 0, 0, 0);
+    transition:  opacity 0.3s ease, color 0.2s;
+    -webkit-transition: opacity 0.3s ease, color 0.2s;
+}
+
+
+
+.form__close:hover {
+    opacity: .6;
+}

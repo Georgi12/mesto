@@ -1,5 +1,5 @@
 .form__close {
-    background-image: url("../../../images/close-Icon.png");
+    background-image: url("../../../images/close_icon.svg");
     min-width: 58px;
     min-height: 58px;
     padding: 0;
@@ -21,4 +21,5 @@
 
 .form__close:hover {
     opacity: .6;
+    cursor: pointer;
 }

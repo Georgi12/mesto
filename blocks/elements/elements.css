@@ -23,7 +23,6 @@
     .elements {
         max-width: 282px;
         grid-template-columns: 1fr;
-        margin: auto;
     }
 }
 

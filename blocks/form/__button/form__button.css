@@ -16,4 +16,5 @@
 
 .form__button:hover {
     opacity: .8;
+    cursor: pointer;
 }

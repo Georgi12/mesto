@@ -1,4 +1,4 @@
-.footer-copyrite {
+.footer-copyright {
     font-size: 18px;
     line-height: 22px;
     color: #545454;
@@ -9,7 +9,7 @@
 
 
 @media screen and (max-width: 1024px) {
-    .footer-copyrite {
+    .footer-copyright {
         margin: 48px 19px 36px;
     }
 }

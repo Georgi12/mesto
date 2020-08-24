@@ -2,8 +2,8 @@
     display: grid;
     column-gap: 17px;
     row-gap: 16px;
-    max-width: 336px;
-    grid-template-columns: 1fr 24px;
+    max-width: min-content;
+    grid-template-columns: min-content 24px;
     align-self: center;
     margin-right: auto;
 

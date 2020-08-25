@@ -20,9 +20,10 @@ let closePopup = function (event) {
 
 let popupToggle = function () {
     popup.classList.toggle("popup_display-on");
+    if (popup.classList.contains('popup_display-on')) {
         name.value = profileName.textContent;
-        description.value = profileDescription.textContent
-}
+        description.value = profileDescription.textContent;
+}}
 
 
 

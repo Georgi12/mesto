@@ -11,7 +11,7 @@
         <header class="header">
             <img src="./images/header-logo.svg" class='logo' alt="Логотип, надпись на английском -  'mesto russia'">
         </header>
-        <div class="main">
+        <main class="main">
             <section class="profile">
                 <img src="./images/jac-if-custo.jpg" class="profile__avatar"  alt="портретная фотография пользователя">
                 <div class="profile__info"> 
@@ -73,15 +73,17 @@
                 </article>
             
             </section>
-        </div>
-        <footer class="footer-copyright">&copy; 2020 Mesto Russia</footer>
+        </main>
+        <footer class="footer-copyright"> 
+            <p>&copy; 2020 Mesto Russia</p>
+        </footer>
     
     
     
         <div class="popup">
             <form class="form" name="popup">
                 <button type="button" class="form__close" aria-label="Закрыть попап"></button>
-                <h2 class="from__title">Редактировать профиль</h2>
+                <h2 class="form__title">Редактировать профиль</h2>
                 <input type="text" size="40" class="form__input form__name" name="name" value="Жак-Ив Кусто" required>
                 <input type="text" size="40" class="form__input form__description" name="description" value="Исследователь океана" required>
                 <button type="submit" class="form__button">Сохранить</button>

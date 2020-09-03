@@ -49,6 +49,7 @@ const initialCards = [
 
 
 const addPhoto = (name, photo) => {
+    console.log('dsfffffffffff')
     const protoElement = document.querySelector("#element-template").content;
     const element =  protoElement.cloneNode(true);
     const image = element.querySelector(".element__image");
@@ -82,29 +83,32 @@ const closePopup = event =>  {
 }
 
 let popupToggle = function (event, popup) {
+    popup.classList.toggle("popup_display-on");
     const closeButton = popup.querySelector(".form__close");
     const currentForm = popup.querySelector(".form");
     const formName = popup.querySelector(".form__name");
     const formDescription = popup.querySelector(".form__description")
-    let buttonFunction = determineFunction(popup)
     closeButton.addEventListener('click', closePopup);
     popup.addEventListener('click', closePopup)
+    let buttonFunction = determineFunction(popup)
     if (popup.classList.contains('popup_display-on')) {
+
         currentForm.addEventListener('submit', function(event){
-            event.preventDefault();
+
+
             buttonFunction(formName.value, formDescription.value);
-            popup.classList.toggle("popup_display-on")
-            return false
+            popup.classList.remove("popup_display-on")
+            event.preventDefault();
         })
+
         if (!popup.classList.contains('popup-place')) {
             formName.value = profileName.textContent;
             formDescription.value = profileDescription.textContent;
         }
     }
-
-    popup.classList.toggle("popup_display-on");
 }
 
 
+
 profileButton.addEventListener('click', profileDetermineFunction);
-placeButton.addEventListener('click', placeDetermineFunction)
+placeButton.addEventListener('click', placeDetermineFunction);

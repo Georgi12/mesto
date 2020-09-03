@@ -48,7 +48,7 @@ const initialCards = [
 ];
 
 
-const addPhoto = (name, photo) =>  {
+const addPhoto = (name, photo) => {
     const protoElement = document.querySelector("#element-template").content;
     const element =  protoElement.cloneNode(true);
     const image = element.querySelector(".element__image");
@@ -59,27 +59,42 @@ const addPhoto = (name, photo) =>  {
 }
 initialCards.forEach(element => addPhoto(element.name, element.link));
 
-const getPopupValues =  (name, description) => {
+const getPopupValues =  (name, description) =>  {
     profileName.textContent = name;
     profileDescription.textContent = description;
 }
 
+
+const profileDetermineFunction = event  => popupToggle(event, popupProfile);
+const placeDetermineFunction = event => popupToggle(event, popupPlace);
+
+const determineFunction =  popup =>  {
+    if (!popup.classList.contains('popup-place') && popup.classList.contains('popup'))  return getPopupValues;
+    if (popup.classList.contains('popup-place')) return  addPhoto;
+}
+
+
+
+const closePopup = event =>  {
+    if (event.target !== event.currentTarget) return
+    let popup = event.target.closest('.popup');
+    popupToggle(event, popup);
+}
 
 let popupToggle = function (event, popup) {
     const closeButton = popup.querySelector(".form__close");
     const currentForm = popup.querySelector(".form");
     const formName = popup.querySelector(".form__name");
     const formDescription = popup.querySelector(".form__description")
+    let buttonFunction = determineFunction(popup)
     closeButton.addEventListener('click', closePopup);
     popup.addEventListener('click', closePopup)
     if (popup.classList.contains('popup_display-on')) {
-        let buttonFunction;
-        if (!popup.classList.contains('popup-place') && popup.classList.contains('popup')) buttonFunction = getPopupValues
-        if (popup.classList.contains('popup-place')) buttonFunction = addPhoto
         currentForm.addEventListener('submit', function(event){
             event.preventDefault();
             buttonFunction(formName.value, formDescription.value);
-            popup.classList.toggle("popup_display-on");
+            popup.classList.toggle("popup_display-on")
+            return false
         })
         if (!popup.classList.contains('popup-place')) {
             formName.value = profileName.textContent;
@@ -88,19 +103,6 @@ let popupToggle = function (event, popup) {
     }
 
     popup.classList.toggle("popup_display-on");
-    }
-
-
-const profileDetermineFunction = event => popupToggle(event, popupProfile)
-
-
-const placeDetermineFunction = event => popupToggle(event, popupPlace)
-
-
-const closePopup = event => {
-    if (event.target !== event.currentTarget) return
-    let popup = event.target.closest('.popup');
-    popupToggle(event, popup);
 }
 
 

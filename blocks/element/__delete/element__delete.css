@@ -1,10 +1,14 @@
-.element__like {
-    background-image: url("../../../images/like.svg");
+
+.element__delete {
+    background-image: url("../../../images/delete.svg");
     background-color: transparent;
     background-position: center;
     background-size: contain;
-    width: 20.76px;
-    height: 18.13px;
+    position: relative;
+    top: 40px;
+    left: 249px;
+    width: 18px;
+    height: 19.3px;
     align-self: center;
     background-repeat: no-repeat;
     border: none;
@@ -13,8 +17,7 @@
     -webkit-transition: opacity 0.3s ease, color 0.2s;
 }
 
-.element__like:hover {
+.element__delete:hover {
     opacity: .6;
     cursor: pointer;
 }
-

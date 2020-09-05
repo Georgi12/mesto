@@ -1,12 +1,12 @@
-.form__close {
+.popup-photo__close {
     background-image: url("../../../images/close_icon.svg");
     min-width: 58px;
     min-height: 58px;
     padding: 0;
     background-size: 100%;
     position: absolute;
-    right: -47px;
-    top: -43px;
+    right: -50px;
+    top: -50px;
     border: none;
     outline: none;
     margin: 0;
@@ -16,9 +16,7 @@
     -webkit-transition: opacity 0.3s ease, color 0.2s;
 }
 
-
-
-.form__close:hover {
+.popup-photo__close:hover {
     opacity: .6;
     cursor: pointer;
 }

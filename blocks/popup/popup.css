@@ -3,8 +3,16 @@
     left: 0;
     top: 0;
     width: 100%;
-    display: none;
-    height: 100vh;
     position: fixed;
     z-index: 100;
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
+    transition: opacity 0.9s ease;
+    -webkit-transition: opacity 0.3s ease;
+}
+
+.popup.popup_display-on {
+    height: 100vh;
+    opacity: 1;
 }

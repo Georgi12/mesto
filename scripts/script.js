@@ -90,7 +90,7 @@ const addPhoto = (name, photo) => {
     delButton.addEventListener('click', delPlace);
     likeButton.addEventListener('click', likeToggle);
     popupPhoto.addEventListener('click', closePopup);
-    elements.append(element);
+    elements.prepend(element);
 }
 initialCards.forEach(element => addPhoto(element.name, element.link));
 

@@ -13,8 +13,8 @@
     background-repeat: no-repeat;
     border: none;
     outline: none;
-    transition:  opacity 0.3s ease, color 0.2s;
-    -webkit-transition: opacity 0.3s ease, color 0.2s;
+    transition:  opacity 0.3s ease;
+    -webkit-transition: opacity 0.3s ease;
 }
 
 .element__delete:hover {

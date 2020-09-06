@@ -23,6 +23,9 @@ const closeButtonPlace = popupPlace.querySelector(".form__close");
 const popupPhoto = document.querySelector(".popup_photo-position")
 const closeButtonPhoto = popupPhoto.querySelector(".popup-photo__close");
 
+// Шаблон фото
+const protoElement = document.querySelector("#element-template").content;
+
 const initialCards = [
     {
         name: 'Архыз',
@@ -53,7 +56,7 @@ const initialCards = [
 
 const closePopup = event =>  {
     if (event.target !== event.currentTarget) return
-    let popup = event.target.closest('.popup');
+    const popup = event.target.closest('.popup');
     popupToggle(popup);
 }
 
@@ -77,7 +80,6 @@ const likeToggle =  (event) => {
 }
 
 const addPhoto = (name, photo) => {
-    const protoElement = document.querySelector("#element-template").content;
     const element =  protoElement.cloneNode(true);
     const image = element.querySelector(".element__image");
     const delButton = element.querySelector(".element__delete");
@@ -140,3 +142,7 @@ profileButton.addEventListener('click', profileDetermineFunction);
 placeButton.addEventListener('click', placeDetermineFunction);
 closeButtonProfile.addEventListener('click', closePopup);  
 closeButtonPlace.addEventListener('click', closePopup);
+
+
+// Да я в 6 работе это учту, по поводу условных конструкций в обработчике закрытия попапа, спасибо
+// Я понимаю свою ошибку, и судя по 6 спринту, вызов форм тоже нужно будет переделывать.

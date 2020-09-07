@@ -77,6 +77,7 @@ const escHandler = event => {
             'profile__add-button': popupPlace,
             'page': popupPhoto
         }
+        if(!determine[event.target.className]) return
         const popup =  determine[event.target.className]
         popupToggle(popup);
         afterClose(popup);
@@ -120,6 +121,7 @@ const profileDetermineFunction = (event)  => {
         'element__image': preparePhoto
     }
     const popup =  determine[event.target.className]
+    if(!popup) return
     if(prepareFunctions[event.target.className]) {
         prepareFunctions[event.target.className](event, popup)
     }
@@ -167,6 +169,7 @@ const popupHandler = (event) => {
     const formName = popup.querySelector(".popup__name");
     const formDescription = popup.querySelector(".popup__description");
     const popup_function = determineFunction(popup);
+    if(!popup_function) return
     popup_function(formName.value, formDescription.value);
     closePopup(event);
 }

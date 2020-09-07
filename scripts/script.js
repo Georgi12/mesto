@@ -57,32 +57,57 @@ const afterClose = (popup) => {
     }
 }
 
-
 const closePopup = event =>  {
-    console.log(event.target)
-    console.log(event.currentTarget)
-    if (event.target !== event.currentTarget) return
     const popup = event.target.closest('.popup');
-    const close_btn = popup.querySelector('.popup__close')
     popupToggle(popup);
     afterClose(popup);
+    removeListners(popup);   
+}
+
+const overlayClose = event => {
+    if (event.target !== event.currentTarget) return
+    closePopup(event)
+}
+
+const escHandler = event => {
+    console.log(event.key)
+    if(event.key === 'Escape') {
+        const determine = {
+            'profile__edit-button': popupProfile,
+            'profile__add-button': popupPlace,
+            'page': popupPhoto
+        }
+        const popup =  determine[event.target.className]
+        popupToggle(popup);
+        afterClose(popup);
+        removeListners(popup); 
+    }
+}
+
+
+const removeListners = popup => {
+    const close_btn = popup.querySelector('.popup__close')
     popup.removeEventListener('submit', popupHandler)
-    popup.removeEventListener('click', closePopup);
-    popup.removeEventListener('keydown', escHandler)
+    popup.removeEventListener('click', overlayClose);
+    document.removeEventListener('keydown', escHandler);
     close_btn.removeEventListener('click', closePopup);
 }
+
+const addListners = popup => {
+    const close_btn = popup.querySelector('.popup__close')
+    popup.addEventListener('submit', popupHandler)
+    popup.addEventListener('click', overlayClose)
+    document.addEventListener('keydown', escHandler)
+    close_btn.addEventListener('click', closePopup)
+}
+
+
 
 const preparePhoto = (event, popup) => {
     popup.querySelector(".popup__image").src = event.target.src
     popup.querySelector(".popup__photo-title").textContent = event.target.closest('.element').querySelector('.element__caption').textContent
 }
 
-const escHandler = event => {
-    event.preventDefault();
-    if(event.key === 'Escape') {
-        closePopup(event)
-    }
-}
 
 
 const profileDetermineFunction = (event)  => {
@@ -98,11 +123,7 @@ const profileDetermineFunction = (event)  => {
     if(prepareFunctions[event.target.className]) {
         prepareFunctions[event.target.className](event, popup)
     }
-    const close_btn = popup.querySelector('.popup__close')
-    popup.addEventListener('submit', popupHandler)
-    popup.addEventListener('click', closePopup)
-    popup.addEventListener('keydown', escHandler)
-    close_btn.addEventListener('click', closePopup)
+    addListners(popup)
     popupToggle(popup)
 }
 
@@ -115,6 +136,7 @@ const likeToggle =  (event) => {
 }
 
 const addPhoto = (name, photo) => {
+    console.log(name, photo)
     const element =  protoElement.cloneNode(true);
     const image = element.querySelector(".element__image");
     image.src = photo;
@@ -130,8 +152,8 @@ const getPopupValues =  (name, description) =>  {
 }
 
 const determineFunction =  popup =>  {
-    if (!popup.classList.contains('popup-place') && popup.classList.contains('popup'))  return getPopupValues;
-    if (popup.classList.contains('popup_photo-position')) return  addPhoto;
+    if (popup.classList.contains('popup_fio'))  return getPopupValues;
+    if (popup.classList.contains('popup_place')) return  addPhoto;
 }
 
 const popupToggle = function (popup) {
@@ -146,7 +168,7 @@ const popupHandler = (event) => {
     const formDescription = popup.querySelector(".popup__description");
     const popup_function = determineFunction(popup);
     popup_function(formName.value, formDescription.value);
-    popup.classList.remove("popup_display-on");
+    closePopup(event);
 }
 
 
@@ -156,6 +178,9 @@ const galleryDetermineFunction = (event) => {
         'element__like': likeToggle,
         'element__like element_active-like': likeToggle,
         'element__image': profileDetermineFunction,
+    }
+        const prepareFunctions = {
+        'element__image': preparePhoto
     }
     if(galleryDetermineHandler[event.target.className]) {
         galleryDetermineHandler[event.target.className](event)

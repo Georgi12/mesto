@@ -12,16 +12,13 @@ const profileName = document.querySelector(".profile__name");
 const profileDescription = document.querySelector(".profile__description");
 
 // элкменты попапа профиля
-const popupProfile = document.querySelector(".popup");
-const closeButtonProfile = popupProfile.querySelector(".form__close");
+const popupProfile = document.querySelector(".popup_fio");
 
 
 // элкменты попапа объектов галерии
-const popupPlace = document.querySelector(".popup-place");
-const closeButtonPlace = popupPlace.querySelector(".form__close");
+const popupPlace = document.querySelector(".popup_place");
 
 const popupPhoto = document.querySelector(".popup_photo-position")
-const closeButtonPhoto = popupPhoto.querySelector(".popup-photo__close");
 
 // Шаблон фото
 const protoElement = document.querySelector("#element-template").content;
@@ -53,23 +50,61 @@ const initialCards = [
     }
 ];
 
+const afterClose = (popup) => {
+    if(popup === popupProfile) {
+        popup.querySelector(".popup__name").value = profileName.textContent;
+        popup.querySelector(".popup__description").value = profileDescription.textContent;
+    }
+}
+
 
 const closePopup = event =>  {
+    console.log(event.target)
+    console.log(event.currentTarget)
     if (event.target !== event.currentTarget) return
     const popup = event.target.closest('.popup');
+    const close_btn = popup.querySelector('.popup__close')
     popupToggle(popup);
+    afterClose(popup);
+    popup.removeEventListener('submit', popupHandler)
+    popup.removeEventListener('click', closePopup);
+    popup.removeEventListener('keydown', escHandler)
+    close_btn.removeEventListener('click', closePopup);
 }
 
-const profileDetermineFunction = ()  => popupToggle(popupProfile);
-
-const placeDetermineFunction = () => popupToggle(popupPlace);
-
-const photoDetermineFunction = (event) => {
-    popupPhoto.querySelector(".popup-photo__image").src = event.target.src
-    popupPhoto.querySelector(".popup-photo__title").textContent = event.target.nextElementSibling.firstElementChild.textContent
-    popupToggle(popupPhoto)
+const preparePhoto = (event, popup) => {
+    popup.querySelector(".popup__image").src = event.target.src
+    popup.querySelector(".popup__photo-title").textContent = event.target.closest('.element').querySelector('.element__caption').textContent
 }
 
+const escHandler = event => {
+    event.preventDefault();
+    if(event.key === 'Escape') {
+        closePopup(event)
+    }
+}
+
+
+const profileDetermineFunction = (event)  => {
+    const determine = {
+        'profile__edit-button': popupProfile,
+        'profile__add-button': popupPlace,
+        'element__image': popupPhoto
+    }
+    const prepareFunctions = {
+        'element__image': preparePhoto
+    }
+    const popup =  determine[event.target.className]
+    if(prepareFunctions[event.target.className]) {
+        prepareFunctions[event.target.className](event, popup)
+    }
+    const close_btn = popup.querySelector('.popup__close')
+    popup.addEventListener('submit', popupHandler)
+    popup.addEventListener('click', closePopup)
+    popup.addEventListener('keydown', escHandler)
+    close_btn.addEventListener('click', closePopup)
+    popupToggle(popup)
+}
 
 const delPlace = event => {
     event.target.closest(".element").remove()
@@ -82,16 +117,9 @@ const likeToggle =  (event) => {
 const addPhoto = (name, photo) => {
     const element =  protoElement.cloneNode(true);
     const image = element.querySelector(".element__image");
-    const delButton = element.querySelector(".element__delete");
-    const likeButton = element.querySelector(".element__like");
     image.src = photo;
     image.alt = name;
-    image.addEventListener('click', photoDetermineFunction );
-    closeButtonPhoto.addEventListener('click', closePopup);
     element.querySelector(".element__caption").textContent = name;
-    delButton.addEventListener('click', delPlace);
-    likeButton.addEventListener('click', likeToggle);
-    popupPhoto.addEventListener('click', closePopup);
     elements.prepend(element);
 }
 initialCards.forEach(element => addPhoto(element.name, element.link));
@@ -103,46 +131,39 @@ const getPopupValues =  (name, description) =>  {
 
 const determineFunction =  popup =>  {
     if (!popup.classList.contains('popup-place') && popup.classList.contains('popup'))  return getPopupValues;
-    if (popup.classList.contains('popup-place')) return  addPhoto;
+    if (popup.classList.contains('popup_photo-position')) return  addPhoto;
 }
 
 const popupToggle = function (popup) {
     popup.classList.toggle("popup_display-on");
-    if (popup.classList.contains('popup_photo-position')) return;
-    if (popup.classList.contains('popup_display-on') && !popup.classList.contains('popup-place')) {
-        popup.querySelector(".form__name").value = profileName.textContent;
-        popup.querySelector(".form__description").value = profileDescription.textContent;
-    }
 }
 
 
-const popupHandler = (event, popup) => {
-    const formName = popup.querySelector(".form__name");
-    const formDescription = popup.querySelector(".form__description");
+const popupHandler = (event) => {
+    event.preventDefault();
+    const popup = event.target.closest('.popup')
+    const formName = popup.querySelector(".popup__name");
+    const formDescription = popup.querySelector(".popup__description");
     const popup_function = determineFunction(popup);
     popup_function(formName.value, formDescription.value);
     popup.classList.remove("popup_display-on");
-    event.preventDefault();
 }
 
 
-popupProfile.addEventListener('submit', function(event){
-    popupHandler(event, popupProfile);
-})
+const galleryDetermineFunction = (event) => {
+    const galleryDetermineHandler = {
+        'element__delete': delPlace,
+        'element__like': likeToggle,
+        'element__like element_active-like': likeToggle,
+        'element__image': profileDetermineFunction,
+    }
+    if(galleryDetermineHandler[event.target.className]) {
+        galleryDetermineHandler[event.target.className](event)
+    }
 
-popupPlace.addEventListener('submit', function(event){
-    popupHandler(event, popupPlace);
-})
+}
 
-popupProfile.addEventListener('click', closePopup);
-popupPlace.addEventListener('click', closePopup);
-popupProfile.addEventListener('click', closePopup);
-popupPlace.addEventListener('click', closePopup);
 profileButton.addEventListener('click', profileDetermineFunction);
-placeButton.addEventListener('click', placeDetermineFunction);
-closeButtonProfile.addEventListener('click', closePopup);  
-closeButtonPlace.addEventListener('click', closePopup);
+placeButton.addEventListener('click', profileDetermineFunction);
+elements.addEventListener('click', galleryDetermineFunction)
 
-
-// Да я в 6 работе это учту, по поводу условных конструкций в обработчике закрытия попапа, спасибо
-// Я понимаю свою ошибку, и судя по 6 спринту, вызов форм тоже нужно будет переделывать.

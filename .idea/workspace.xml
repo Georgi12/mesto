@@ -19,18 +19,20 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51741ce1-ab2d-40e1-8a99-840edc4772d7" name="Default Changelist" comment="fix: оптимизации верстки">
+    <list default="true" id="51741ce1-ab2d-40e1-8a99-840edc4772d7" name="Default Changelist" comment="feature: плавное появления попап">
+      <change afterPath="$PROJECT_DIR$/blocks/popup/__input_type_error/popup__input_type_error.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scripts/validate.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blocks/element/__delete/element__delete.css" beforeDir="false" afterPath="$PROJECT_DIR$/blocks/element/__delete/element__delete.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blocks/element/__image/element__image.css" beforeDir="false" afterPath="$PROJECT_DIR$/blocks/element/__image/element__image.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blocks/element/__like/element__like.css" beforeDir="false" afterPath="$PROJECT_DIR$/blocks/element/__like/element__like.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blocks/form/__button/form__button.css" beforeDir="false" afterPath="$PROJECT_DIR$/blocks/form/__button/form__button.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blocks/form/__close/form__close.css" beforeDir="false" afterPath="$PROJECT_DIR$/blocks/form/__close/form__close.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blocks/page/_display-on/page-popup_display-on.css" beforeDir="false" afterPath="$PROJECT_DIR$/blocks/popup/_display-on/popup_display-on.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blocks/popup-photo/__close/popup-photo__close.css" beforeDir="false" afterPath="$PROJECT_DIR$/blocks/popup-photo/__close/popup-photo__close.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blocks/popup/popup.css" beforeDir="false" afterPath="$PROJECT_DIR$/blocks/popup/popup.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blocks/profile/__add-button/profile__add-button.css" beforeDir="false" afterPath="$PROJECT_DIR$/blocks/profile/__add-button/profile__add-button.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blocks/profile/__edit-button/profile__edit-button.css" beforeDir="false" afterPath="$PROJECT_DIR$/blocks/profile/__edit-button/profile__edit-button.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blocks/form/__button/form__button.css" beforeDir="false" afterPath="$PROJECT_DIR$/blocks/popup/__button/popup__button.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blocks/form/__close/form__close.css" beforeDir="false" afterPath="$PROJECT_DIR$/blocks/popup/__close/popup__close.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blocks/form/__input/form__input.css" beforeDir="false" afterPath="$PROJECT_DIR$/blocks/popup/__input/popup__input.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blocks/form/__title/form__title.css" beforeDir="false" afterPath="$PROJECT_DIR$/blocks/popup/__title/popup__title.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blocks/form/form.css" beforeDir="false" afterPath="$PROJECT_DIR$/blocks/popup/__form/popup__form.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blocks/popup-photo/__close/popup-photo__close.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/blocks/popup-photo/__figure/popup-photo__figure.css" beforeDir="false" afterPath="$PROJECT_DIR$/blocks/popup/__figure/popup__figure.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blocks/popup-photo/__image/popup-photo__image.css" beforeDir="false" afterPath="$PROJECT_DIR$/blocks/popup/__image/popup__image.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blocks/popup-photo/__title/popup-photo__title.css" beforeDir="false" afterPath="$PROJECT_DIR$/blocks/popup/__photo-title/popup__photo-title.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/script.js" afterDir="false" />
     </list>
@@ -42,17 +44,13 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="JavaScript File" />
         <option value="CSS File" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-7" />
-    <option name="width" value="974" />
-    <option name="height" value="1047" />
   </component>
   <component name="ProjectId" id="1gvQRoGAiMMlAtwDtpXCuG4U8IM" />
   <component name="ProjectViewState">
@@ -95,7 +93,7 @@
       </list>
     </recent_temporary>
   </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="false" />
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -113,7 +111,9 @@
       <workItem from="1599174893466" duration="89000" />
       <workItem from="1599175352760" duration="407000" />
       <workItem from="1599254131378" duration="379000" />
-      <workItem from="1599254568697" duration="26644000" />
+      <workItem from="1599254568697" duration="27323000" />
+      <workItem from="1599349522710" duration="1377000" />
+      <workItem from="1599379698997" duration="25580000" />
     </task>
     <task id="LOCAL-00001" summary="feature : добалено новый попап и js">
       <created>1599112413240</created>
@@ -171,7 +171,14 @@
       <option name="project" value="LOCAL" />
       <updated>1599315026936</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="feature: плавное появления попап">
+      <created>1599320573250</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1599320573250</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -210,7 +217,8 @@
     <MESSAGE value="feature: тогл в начало" />
     <MESSAGE value="feature: like button and imm popup" />
     <MESSAGE value="fix: оптимизации верстки" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: оптимизации верстки" />
+    <MESSAGE value="feature: плавное появления попап" />
+    <option name="LAST_COMMIT_MESSAGE" value="feature: плавное появления попап" />
   </component>
   <component name="WindowStateProjectService">
     <state x="757" y="309" key="#Web_Browsers" timestamp="1598992680552">
@@ -229,10 +237,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="92" y="92" width="1736" height="856" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1599254195660" />
-    <state x="739" y="287" key="FileChooserDialogImpl" timestamp="1599317534639">
+    <state x="739" y="287" key="FileChooserDialogImpl" timestamp="1599431391357">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="739" y="287" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1599317534639" />
+    <state x="739" y="287" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1599431391357" />
     <state width="1899" height="314" key="GridCell.Tab.0.bottom" timestamp="1599089318673">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -297,18 +305,22 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1899" height="314" key="GridCell.Tab.3.right/0.0.1920.1040@0.0.1920.1040" timestamp="1599089318673" />
+    <state x="762" y="222" key="RollbackChangesDialog" timestamp="1599408817808">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="762" y="222" key="RollbackChangesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1599408817808" />
     <state x="761" y="217" key="VCS.ChangeListViewerDialog" timestamp="1599159131360">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="761" y="217" key="VCS.ChangeListViewerDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1599159131360" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1599315049142">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1599320582142">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1599315049142" />
-    <state x="626" y="103" width="585" height="801" key="find.popup" timestamp="1599318590899">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1599320582142" />
+    <state x="626" y="103" width="585" height="801" key="find.popup" timestamp="1599433137373">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="626" y="103" width="585" height="801" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1599318590899" />
+    <state x="626" y="103" width="585" height="801" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1599433137373" />
     <state x="676" y="340" key="jetbrains.nodejs.interpreters-dialog" timestamp="1599077515130">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

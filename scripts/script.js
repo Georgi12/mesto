@@ -70,7 +70,6 @@ const overlayClose = event => {
 }
 
 const escHandler = event => {
-    console.log(event.key)
     if(event.key === 'Escape') {
         const determine = {
             'profile__edit-button': popupProfile,
@@ -138,7 +137,6 @@ const likeToggle =  (event) => {
 }
 
 const addPhoto = (name, photo) => {
-    console.log(name, photo)
     const element =  protoElement.cloneNode(true);
     const image = element.querySelector(".element__image");
     image.src = photo;
@@ -181,9 +179,6 @@ const galleryDetermineFunction = (event) => {
         'element__like': likeToggle,
         'element__like element_active-like': likeToggle,
         'element__image': profileDetermineFunction,
-    }
-        const prepareFunctions = {
-        'element__image': preparePhoto
     }
     if(galleryDetermineHandler[event.target.className]) {
         galleryDetermineHandler[event.target.className](event)

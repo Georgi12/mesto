@@ -1,5 +1,5 @@
 .popup__input {
-    margin: 0 auto;
+    margin: 0 auto 5px;
     width: calc(100% - 36px*2);
     background: #fff;
     padding: 0 0 13.56px 0;
@@ -9,13 +9,14 @@
     line-height: 17px;
     text-align: start;
     color: black;
+    outline: none
 }
 
-.popup__input:first-of-type {
-    margin-bottom: 29.74px;
-}
+/*.popup__input:first-of-type {*/
+/*    margin-bottom: 29.74px;*/
+/*}*/
 
 
-.popup__input:focus {
-    outline: none;
-}
+/*.popup__input:focus {*/
+/*    outline: none;*/
+/*}*/

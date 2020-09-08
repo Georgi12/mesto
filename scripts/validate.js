@@ -13,7 +13,6 @@ const showInputError = (formElement, inputElement, errorMessage, inputsErrorClas
     const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
     console.log(inputsErrorClass)
     inputElement.classList.add(inputsErrorClass);
-    debugger
     errorElement.textContent = errorMessage;
     errorElement.classList.add(errorVisible);
 };
@@ -27,7 +26,6 @@ const hideInputError = (formElement, inputElement, inputsErrorClass, errorVisibl
 
 const checkInputValidity = (formElement, inputElement, inputsErrorClass, errorVisible) => {
     if (!inputElement.validity.valid) {
-        console.log(rest)
         showInputError(formElement, inputElement, inputElement.validationMessage, inputsErrorClass, errorVisible);
     } else {
         hideInputError(formElement, inputElement, inputsErrorClass, errorVisible);
@@ -71,8 +69,10 @@ const enableValidation = ({formElement, ...rest}) => {
 
 const toggleButtonState = (inputList, buttonElement, buttonElementDisabled) => {
     if(hasInvalidInput(inputList)) {
+        buttonElement.setAttribute('disabled', '')
         buttonElement.classList.add(buttonElementDisabled)
     } else {
+        buttonElement.removeAttribute('disabled', '')
         buttonElement.classList.remove(buttonElementDisabled)
     }
 }

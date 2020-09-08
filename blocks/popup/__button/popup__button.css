@@ -9,17 +9,13 @@
     border-radius: 2px;
     border: 0;
     padding: 0;
+    box-sizing: border-box;
     outline: none;
     transition:  opacity 0.3s ease;
     -webkit-transition: opacity 0.3s ease;
 }
 
-.popup__button:hover {
+.popup__button:not(.popup__button_disabled):hover {
     opacity: .8;
     cursor: pointer;
-}
-
-
-.popup__button_disabled {
-    display: none;
 }

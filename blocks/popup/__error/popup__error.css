@@ -1,0 +1,9 @@
+.popup__error {
+    margin: 0 auto;
+    min-height: 12px;
+    width: calc(100% - 36px*2);
+}
+
+.popup__error:first-of-type {
+    margin-bottom: 13px;
+}

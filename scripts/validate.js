@@ -11,7 +11,6 @@ const formObject = {
 
 const showInputError = (formElement, inputElement, errorMessage, inputsErrorClass, errorVisible) => {
     const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
-    console.log(inputsErrorClass)
     inputElement.classList.add(inputsErrorClass);
     errorElement.textContent = errorMessage;
     errorElement.classList.add(errorVisible);
@@ -57,7 +56,6 @@ const hasInvalidInput = inputList => {
 
 const enableValidation = ({formElement, ...rest}) => {
     const formList = Array.from(document.querySelectorAll(`.${formElement}`));
-    console.log(formList)
     formList.forEach((formElement) => {
         formElement.addEventListener('submit', function (evt) {
             evt.preventDefault();

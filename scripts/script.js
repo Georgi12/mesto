@@ -1,5 +1,5 @@
 // список элементов картинок
-const elements = document.querySelector(".elements");
+const gallery = document.querySelector(".elements");
 
 // кнопка редактирования профиля
 const profileButton = document.querySelector(".profile__edit-button");
@@ -22,6 +22,12 @@ const popupPhoto = document.querySelector(".popup_photo-position")
 
 // Шаблон фото
 const protoElement = document.querySelector("#element-template").content;
+
+// Очень странно, я сделал еще один файл js, поместил в него массив фотографий.
+// объявил вот так: export const initialCards = [...]. В этом файле пытался импортировать
+// import {initialCards} from "./constants.js" , но JS бы против, говорил что файл не яв-ся модулем.
+// Я в html заделал ему type=module", и сломалось вообще.
+
 
 const initialCards = [
     {
@@ -51,113 +57,132 @@ const initialCards = [
 ];
 
 const afterClose = (popup) => {
-    if(popup === popupProfile) {
+    if (popup === popupProfile) {
         popup.querySelector(".popup__name").value = profileName.textContent;
         popup.querySelector(".popup__description").value = profileDescription.textContent;
     }
 }
 
-const closePopup = event =>  {
-    const popup = event.target.closest('.popup');
-    popupToggle(popup);
-    afterClose(popup);
-    removeListners(popup);   
+
+const closePopup = popup => {
+    popup.classList.remove("popup_display-on")
+
+    removeListeners(popup);
 }
+
+
+const closeWrapper = (popup) => {
+    closePopup(popup);
+    afterClose(popup);
+}
+
 
 const overlayClose = event => {
     if (event.target !== event.currentTarget) return
-    closePopup(event)
+    const popup = event.target.closest(".popup");
+    closeWrapper(popup);
 }
 
 const escHandler = event => {
-    if(event.key === 'Escape') {
-        const determine = {
-            'profile__edit-button': popupProfile,
-            'profile__add-button': popupPlace,
-            'page': popupPhoto
-        }
-        if(!determine[event.target.className]) return
-        const popup =  determine[event.target.className]
-        popupToggle(popup);
-        afterClose(popup);
-        removeListners(popup); 
+    if (event.key === 'Escape') {
+        const activePopup = document.querySelector('.popup_display-on');
+        closeWrapper(activePopup);
     }
 }
 
+const btnClosePopup = event => {
+    const popup = event.target.closest(".popup");
+    closeWrapper(popup);
+}
 
-const removeListners = popup => {
+const removeListeners = popup => {
     const close_btn = popup.querySelector('.popup__close')
     popup.removeEventListener('submit', popupHandler)
     popup.removeEventListener('click', overlayClose);
     document.removeEventListener('keydown', escHandler);
-    close_btn.removeEventListener('click', closePopup);
+    close_btn.removeEventListener('click', btnClosePopup);
 }
 
-const addListners = popup => {
+const addListeners = popup => {
     const close_btn = popup.querySelector('.popup__close')
     popup.addEventListener('submit', popupHandler)
     popup.addEventListener('click', overlayClose)
     document.addEventListener('keydown', escHandler)
-    close_btn.addEventListener('click', closePopup)
+    close_btn.addEventListener('click', btnClosePopup)
 }
-
 
 
 const preparePhoto = (event, popup) => {
-    popup.querySelector(".popup__image").src = event.target.src
-    popup.querySelector(".popup__photo-title").textContent = event.target.closest('.element').querySelector('.element__caption').textContent
+    const image = popup.querySelector(".popup__image")
+    const title = event.target.closest('.element').querySelector('.element__caption').textContent
+    const imageTitle = popup.querySelector(".popup__photo-title")
+    image.src = event.target.src;
+    image.alt = event.target.alt
+    imageTitle.textContent = title
 }
 
 
-
-const profileDetermineFunction = (event)  => {
-    const determine = {
-        'profile__edit-button': popupProfile,
-        'profile__add-button': popupPlace,
-        'element__image': popupPhoto
-    }
-    const prepareFunctions = {
-        'element__image': preparePhoto
-    }
-    const popup =  determine[event.target.className]
-    if(!popup) return
-    if(prepareFunctions[event.target.className]) {
-        prepareFunctions[event.target.className](event, popup)
-    }
-    addListners(popup)
-    popupToggle(popup)
+const profileDetermineFunction = (popup) => {
+    addListeners(popup)
+    popupOpen(popup)
 }
+
+const popupProfileAction = () => {
+    profileDetermineFunction(popupProfile)
+}
+
+const popupPlaceAction = () => {
+    profileDetermineFunction(popupPlace)
+}
+
+const popupPhotoAction = (event) => {
+    preparePhoto(event, popupPhoto)
+    profileDetermineFunction(popupPhoto)
+}
+
 
 const delPlace = event => {
     event.target.closest(".element").remove()
 }
 
-const likeToggle =  (event) => {
+const likeToggle = (event) => {
     event.target.classList.toggle("element_active-like");
 }
 
-const addPhoto = (name, photo) => {
-    const element =  protoElement.cloneNode(true);
-    const image = element.querySelector(".element__image");
-    image.src = photo;
-    image.alt = name;
-    element.querySelector(".element__caption").textContent = name;
-    elements.prepend(element);
+const addPhoto = (arrayElement) => {
+    const element = getCardElement(arrayElement)
+    gallery.prepend(element);
 }
-initialCards.forEach(element => addPhoto(element.name, element.link));
 
-const getPopupValues =  (name, description) =>  {
+const getCardElement = (arrayElement) => {
+    const element = protoElement.cloneNode(true);
+    const image = element.querySelector(".element__image");
+    const caption = element.querySelector(".element__caption")
+    const delButton = element.querySelector(".element__delete")
+    const likeButton = element.querySelector(".element__like")
+    image.src = arrayElement.link;
+    image.alt = arrayElement.name;
+    caption.textContent = arrayElement.name;
+    image.addEventListener('click', popupPhotoAction);
+    delButton.addEventListener('click', delPlace);
+    likeButton.addEventListener('click', likeToggle);
+    return element
+}
+
+initialCards.forEach(element => addPhoto(element));
+
+const getPopupValues = (name, description) => {
     profileName.textContent = name;
     profileDescription.textContent = description;
 }
 
-const determineFunction =  popup =>  {
-    if (popup.classList.contains('popup_fio'))  return getPopupValues;
-    if (popup.classList.contains('popup_place')) return  addPhoto;
+const determineFunction = popup => {
+    if (popup.classList.contains('popup_fio')) return getPopupValues;
+    if (popup.classList.contains('popup_place')) return addPhoto;
 }
 
-const popupToggle = function (popup) {
-    popup.classList.toggle("popup_display-on");
+const popupOpen = function (popup) {
+    popup.classList.add("popup_display-on");
 }
 
 
@@ -166,27 +191,15 @@ const popupHandler = (event) => {
     const popup = event.target.closest('.popup')
     const formName = popup.querySelector(".popup__name");
     const formDescription = popup.querySelector(".popup__description");
-    const popup_function = determineFunction(popup);
-    if(!popup_function) return
-    popup_function(formName.value, formDescription.value);
-    closePopup(event);
+    const popupFunction = determineFunction(popup);
+    if (!popupFunction) return
+    popupFunction(formName.value, formDescription.value);
+    closePopup(popup);
 }
 
+profileButton.addEventListener('click', popupProfileAction);
+placeButton.addEventListener('click', popupPlaceAction);
 
-const galleryDetermineFunction = (event) => {
-    const galleryDetermineHandler = {
-        'element__delete': delPlace,
-        'element__like': likeToggle,
-        'element__like element_active-like': likeToggle,
-        'element__image': profileDetermineFunction,
-    }
-    if(galleryDetermineHandler[event.target.className]) {
-        galleryDetermineHandler[event.target.className](event)
-    }
-
-}
-
-profileButton.addEventListener('click', profileDetermineFunction);
-placeButton.addEventListener('click', profileDetermineFunction);
-elements.addEventListener('click', galleryDetermineFunction)
-
+// может я не правильно полял, просто в тренажере было сказано о том, что много слушателей на элементаж ест много памяти
+// я только по этому решил сделшать так. Можете объяснить в какой ситуации вешать слушатель на всю область, или,
+// а в какой вешать на каждый элемент

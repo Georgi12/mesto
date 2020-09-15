@@ -1,4 +1,6 @@
 import {initialCards} from './constants.js';
+import {Card} from './Card.js';
+import {FormValidator} from "./validate";
 
 // список элементов картинок
 const gallery = document.querySelector(".elements");
@@ -25,6 +27,17 @@ const popupPhoto = document.querySelector(".popup_photo-position")
 
 // Шаблон фото
 const protoElement = document.querySelector("#element-template").content;
+
+// валижация
+const formObject = {
+    formElement: 'popup__form',
+    inputElement: 'popup__input',
+    inputsErrorClass: 'popup__input_type_error',
+    errorVisible: 'popup__error_visible',
+    buttonElement: 'popup__button',
+    buttonElementDisabled: 'popup__button_disabled'
+}
+
 
 const closePopup = popup => {
     popup.classList.remove("popup_display-on")
@@ -96,45 +109,22 @@ const popupPhotoAction = (event) => {
     profileDetermineFunction(popupPhoto)
 }
 
-
-const delPlace = event => {
-    event.target.closest(".element").remove()
-}
-
-const likeToggle = (event) => {
-    event.target.classList.toggle("element_active-like");
-}
-
-const addPhoto = (arrayElement) => {
-    const element = getCardElement(arrayElement)
-    gallery.prepend(element);
-}
-
-const getCardElement = (arrayElement) => {
-    const element = protoElement.cloneNode(true);
-    const image = element.querySelector(".element__image");
-    const caption = element.querySelector(".element__caption")
-    const delButton = element.querySelector(".element__delete")
-    const likeButton = element.querySelector(".element__like")
-    image.src = arrayElement.description;
-    image.alt = arrayElement.name;
-    caption.textContent = arrayElement.name;
-    image.addEventListener('click', popupPhotoAction);
-    delButton.addEventListener('click', delPlace);
-    likeButton.addEventListener('click', likeToggle);
-    return element
-}
-
-initialCards.forEach(element => addPhoto(element));
+initialCards.forEach(element => {
+    const card = new Card(element)
+    card.render(gallery, popupPhotoAction)
+});
 
 const getPopupValues = (popupInput) => {
     profileName.textContent = popupInput.name;
     profileDescription.textContent = popupInput.description;
 }
 
-const determineFunction = popup => {
-    if (popup.classList.contains('popup_fio')) return getPopupValues;
-    if (popup.classList.contains('popup_place')) return addPhoto;
+const determineFunction = (data, popup) => {
+    if (popup.classList.contains('popup_fio')) return getPopupValues(data, popup);
+    if (popup.classList.contains('popup_place')) {
+        const card = new Card(data)
+        card.render(gallery, popupPhotoAction)
+    }
 }
 
 const popupOpen = function (popup) {
@@ -147,9 +137,7 @@ const popupHandler = (event) => {
     const popup = event.target.closest('.popup')
     const formName = popup.querySelector(".popup__name");
     const formDescription = popup.querySelector(".popup__description");
-    const popupFunction = determineFunction(popup);
-    if (!popupFunction) return
-    popupFunction({'name' : formName.value, 'description' :formDescription.value});
+    determineFunction(({'name' : formName.value, 'description' :formDescription.value}), popup);
     closePopup(popup);
 }
 
@@ -161,11 +149,11 @@ const beforeOpen = () => {
 
 
 profileButton.addEventListener('click', () => {
-    // я конечно думал об этом, но предыдущий ревьер предложил это сделать после, тем более что еще был
-    // метод toggle. Спасибо за ревью удачи)
-    // P.S не нашел способо из коробки запустить константы из модуля, вышло только когда я установил локальный сервак.
-
     beforeOpen()
     popupProfileAction()
 } );
 placeButton.addEventListener('click', popupPlaceAction);
+
+
+const validator = new FormValidator(formObject)
+validator.enableValidation()

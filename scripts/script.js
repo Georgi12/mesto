@@ -1,6 +1,6 @@
 import {initialCards} from './constants.js';
 import {Card} from './Card.js';
-import {FormValidator} from "./validate";
+import {FormValidator} from "./validate.js";
 
 // список элементов картинок
 const gallery = document.querySelector(".elements");

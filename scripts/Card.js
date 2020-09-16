@@ -33,7 +33,7 @@ class Card {
 
     render(container, popupPhotoAction) {
         this._prepareElement(popupPhotoAction)
-        container.append(this._element)
+        container.prepend(this._element)
     }
 }
 

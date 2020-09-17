@@ -1,11 +1,12 @@
 
 
 class Card {
-    static  template =  document.querySelector("#element-template").content
 
-    constructor(data) {
+    constructor(data, template) {
         this._link = data.description;
         this._name = data.name;
+        this._template = template
+
     }
 
     _delPlace = event => {
@@ -16,9 +17,13 @@ class Card {
         event.target.classList.toggle("element_active-like");
     }
 
+    _getTemplate() {
+        const template =  document.querySelector(this._template).content
+        return template.cloneNode(true)
+    }
 
-    _prepareElement(popupPhotoAction) {
-        this._element = Card.template.cloneNode(true);
+    getView(popupPhotoAction) {
+        this._element = this._getTemplate();
         const image = this._element.querySelector(".element__image");
         const caption = this._element.querySelector(".element__caption")
         const delButton = this._element.querySelector(".element__delete")
@@ -29,12 +34,9 @@ class Card {
         image.addEventListener('click', popupPhotoAction);
         delButton.addEventListener('click', this._delPlace);
         likeButton.addEventListener('click', this._likeToggle)
+        return this._element
     }
 
-    render(container, popupPhotoAction) {
-        this._prepareElement(popupPhotoAction)
-        container.prepend(this._element)
-    }
 }
 
 export {Card}

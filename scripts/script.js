@@ -25,10 +25,7 @@ const popupPlace = document.querySelector(".popup_place");
 
 const popupPhoto = document.querySelector(".popup_photo-position")
 
-// Шаблон фото
-const protoElement = document.querySelector("#element-template").content;
-
-// валижация
+// валидация
 const formObject = {
     formElement: 'popup__form',
     inputElement: 'popup__input',
@@ -65,19 +62,19 @@ const btnClosePopup = event => {
 }
 
 const removeListeners = popup => {
-    const close_btn = popup.querySelector('.popup__close')
+    const closeBtn = popup.querySelector('.popup__close')
     popup.removeEventListener('submit', popupHandler)
     popup.removeEventListener('click', overlayClose);
     document.removeEventListener('keydown', escHandler);
-    close_btn.removeEventListener('click', btnClosePopup);
+    closeBtn.removeEventListener('click', btnClosePopup);
 }
 
 const addListeners = popup => {
-    const close_btn = popup.querySelector('.popup__close')
+    const closeBtn = popup.querySelector('.popup__close')
     popup.addEventListener('submit', popupHandler)
     popup.addEventListener('click', overlayClose)
     document.addEventListener('keydown', escHandler)
-    close_btn.addEventListener('click', btnClosePopup)
+    closeBtn.addEventListener('click', btnClosePopup)
 }
 
 
@@ -109,9 +106,13 @@ const popupPhotoAction = (event) => {
     profileDetermineFunction(popupPhoto)
 }
 
+const render = (element) => {
+    const card = new Card(element, '#element-template');
+    gallery.prepend(card.getView(popupPhotoAction));
+}
+
 initialCards.forEach(element => {
-    const card = new Card(element)
-    card.render(gallery, popupPhotoAction)
+    render(element)
 });
 
 const getPopupValues = (popupInput) => {
@@ -120,11 +121,8 @@ const getPopupValues = (popupInput) => {
 }
 
 const determineFunction = (data, popup) => {
-    if (popup.classList.contains('popup_fio')) return getPopupValues(data, popup);
-    if (popup.classList.contains('popup_place')) {
-        const card = new Card(data)
-        card.render(gallery, popupPhotoAction)
-    }
+    if (popup.classList.contains('popup_fio')) return getPopupValues(data, popup)
+    if (popup.classList.contains('popup_place')) {render(data)}
 }
 
 const popupOpen = function (popup) {

@@ -1,3 +1,4 @@
+import Section from "./Section.js";
 import {initialCards} from './constants.js';
 import {Card} from './Card.js';
 import {FormValidator} from "./validate.js";
@@ -106,14 +107,18 @@ const popupPhotoAction = (event) => {
     profileDetermineFunction(popupPhoto)
 }
 
-const render = (element) => {
-    const card = new Card(element, '#element-template');
-    gallery.prepend(card.getView(popupPhotoAction));
-}
 
-initialCards.forEach(element => {
-    render(element)
-});
+const galleryArray = new Section({
+    items: initialCards,
+    renderer: (item)  => {
+        const card = new Card(item, '#element-template');
+        galleryArray.addItem(card.getView(popupPhotoAction));
+        }
+    },
+    ".elements",
+);
+
+galleryArray.renderElement()
 
 const getPopupValues = (popupInput) => {
     profileName.textContent = popupInput.name;

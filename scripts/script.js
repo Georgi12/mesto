@@ -4,7 +4,7 @@ import {Card} from './Card.js';
 import {FormValidator} from "./validate.js";
 
 // список элементов картинок
-const gallery = document.querySelector(".elements");
+const gallery =".elements";
 
 // кнопка редактирования профиля
 const profileButton = document.querySelector(".profile__edit-button");
@@ -115,7 +115,7 @@ const galleryArray = new Section({
         galleryArray.addItem(card.getView(popupPhotoAction));
         }
     },
-    ".elements",
+    gallery,
 );
 
 galleryArray.renderElement()

@@ -19,21 +19,11 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51741ce1-ab2d-40e1-8a99-840edc4772d7" name="Default Changelist" comment="feature: плавное появления попап">
-      <change afterPath="$PROJECT_DIR$/blocks/popup/__input_type_error/popup__input_type_error.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scripts/validate.js" afterDir="false" />
+    <list default="true" id="51741ce1-ab2d-40e1-8a99-840edc4772d7" name="Default Changelist" comment="feature: создалл классы Card и FormValidation">
+      <change afterPath="$PROJECT_DIR$/scripts/Popup.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scripts/Section.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blocks/form/__button/form__button.css" beforeDir="false" afterPath="$PROJECT_DIR$/blocks/popup/__button/popup__button.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blocks/form/__close/form__close.css" beforeDir="false" afterPath="$PROJECT_DIR$/blocks/popup/__close/popup__close.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blocks/form/__input/form__input.css" beforeDir="false" afterPath="$PROJECT_DIR$/blocks/popup/__input/popup__input.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blocks/form/__title/form__title.css" beforeDir="false" afterPath="$PROJECT_DIR$/blocks/popup/__title/popup__title.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blocks/form/form.css" beforeDir="false" afterPath="$PROJECT_DIR$/blocks/popup/__form/popup__form.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blocks/popup-photo/__close/popup-photo__close.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/blocks/popup-photo/__figure/popup-photo__figure.css" beforeDir="false" afterPath="$PROJECT_DIR$/blocks/popup/__figure/popup__figure.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blocks/popup-photo/__image/popup-photo__image.css" beforeDir="false" afterPath="$PROJECT_DIR$/blocks/popup/__image/popup__image.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blocks/popup-photo/__title/popup-photo__title.css" beforeDir="false" afterPath="$PROJECT_DIR$/blocks/popup/__photo-title/popup__photo-title.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/script.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -44,12 +34,17 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="JavaScript File" />
         <option value="CSS File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1gvQRoGAiMMlAtwDtpXCuG4U8IM" />
@@ -60,7 +55,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/blocks/popup" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -87,11 +82,6 @@
     <configuration name="script.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="script.js" working-dir="$PROJECT_DIR$/scripts">
       <method v="2" />
     </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="JavaScript Debug.index.html" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
@@ -113,7 +103,15 @@
       <workItem from="1599254131378" duration="379000" />
       <workItem from="1599254568697" duration="27323000" />
       <workItem from="1599349522710" duration="1377000" />
-      <workItem from="1599379698997" duration="25580000" />
+      <workItem from="1599379698997" duration="25644000" />
+      <workItem from="1599438998493" duration="61000" />
+      <workItem from="1599510254119" duration="14659000" />
+      <workItem from="1599593486020" duration="17777000" />
+      <workItem from="1599684971547" duration="3578000" />
+      <workItem from="1600116659215" duration="11174000" />
+      <workItem from="1601201744515" duration="771000" />
+      <workItem from="1601269077443" duration="1703000" />
+      <workItem from="1601324280148" duration="4829000" />
     </task>
     <task id="LOCAL-00001" summary="feature : добалено новый попап и js">
       <created>1599112413240</created>
@@ -178,7 +176,70 @@
       <option name="project" value="LOCAL" />
       <updated>1599320573250</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="fix: оптимизация проэкта">
+      <created>1599438940263</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1599438940263</updated>
+    </task>
+    <task id="LOCAL-00011" summary="feature: валидация">
+      <created>1599439041763</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1599439041763</updated>
+    </task>
+    <task id="LOCAL-00012" summary="feature: валидация форм">
+      <created>1599525563848</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1599525563848</updated>
+    </task>
+    <task id="LOCAL-00013" summary="wip">
+      <created>1599526154468</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1599526154468</updated>
+    </task>
+    <task id="LOCAL-00014" summary="fix файл  normalize подключаеься первым">
+      <created>1599593606049</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1599593606049</updated>
+    </task>
+    <task id="LOCAL-00015" summary="fix  исправлены ошибки ревью">
+      <created>1599613102081</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1599613102081</updated>
+    </task>
+    <task id="LOCAL-00016" summary="add: комменты">
+      <created>1599613498840</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1599613498840</updated>
+    </task>
+    <task id="LOCAL-00017" summary="fix: вынесены константы, работает фото">
+      <created>1599687917793</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1599687917793</updated>
+    </task>
+    <task id="LOCAL-00018" summary="feature: создалл классы Card и FormValidation">
+      <created>1600212320634</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1600212320634</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -218,7 +279,16 @@
     <MESSAGE value="feature: like button and imm popup" />
     <MESSAGE value="fix: оптимизации верстки" />
     <MESSAGE value="feature: плавное появления попап" />
-    <option name="LAST_COMMIT_MESSAGE" value="feature: плавное появления попап" />
+    <MESSAGE value="fix: оптимизация проэкта" />
+    <MESSAGE value="feature: валидация" />
+    <MESSAGE value="feature: валидация форм" />
+    <MESSAGE value="wip" />
+    <MESSAGE value="fix файл  normalize подключаеься первым" />
+    <MESSAGE value="fix  исправлены ошибки ревью" />
+    <MESSAGE value="add: комменты" />
+    <MESSAGE value="fix: вынесены константы, работает фото" />
+    <MESSAGE value="feature: создалл классы Card и FormValidation" />
+    <option name="LAST_COMMIT_MESSAGE" value="feature: создалл классы Card и FormValidation" />
   </component>
   <component name="WindowStateProjectService">
     <state x="757" y="309" key="#Web_Browsers" timestamp="1598992680552">
@@ -233,14 +303,14 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="0" y="0" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1599163706655" />
-    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog" timestamp="1599254195660">
+    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog" timestamp="1599613128409">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1599254195660" />
-    <state x="739" y="287" key="FileChooserDialogImpl" timestamp="1599431391357">
+    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1599613128409" />
+    <state x="739" y="287" key="FileChooserDialogImpl" timestamp="1601201914626">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="739" y="287" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1599431391357" />
+    <state x="739" y="287" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1601201914626" />
     <state width="1899" height="314" key="GridCell.Tab.0.bottom" timestamp="1599089318673">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -305,22 +375,22 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1899" height="314" key="GridCell.Tab.3.right/0.0.1920.1040@0.0.1920.1040" timestamp="1599089318673" />
-    <state x="762" y="222" key="RollbackChangesDialog" timestamp="1599408817808">
+    <state x="762" y="222" key="RollbackChangesDialog" timestamp="1601201815232">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="762" y="222" key="RollbackChangesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1599408817808" />
-    <state x="761" y="217" key="VCS.ChangeListViewerDialog" timestamp="1599159131360">
+    <state x="762" y="222" key="RollbackChangesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1601201815232" />
+    <state x="761" y="217" key="VCS.ChangeListViewerDialog" timestamp="1599602464054">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="761" y="217" key="VCS.ChangeListViewerDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1599159131360" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1599320582142">
+    <state x="761" y="217" key="VCS.ChangeListViewerDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1599602464054" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1600212328800">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1599320582142" />
-    <state x="626" y="103" width="585" height="801" key="find.popup" timestamp="1599433137373">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1600212328800" />
+    <state x="626" y="103" width="585" height="801" key="find.popup" timestamp="1599524703344">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="626" y="103" width="585" height="801" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1599433137373" />
+    <state x="626" y="103" width="585" height="801" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1599524703344" />
     <state x="676" y="340" key="jetbrains.nodejs.interpreters-dialog" timestamp="1599077515130">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

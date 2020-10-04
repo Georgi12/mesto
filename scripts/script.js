@@ -2,9 +2,14 @@ import Section from "./Section.js";
 import {initialCards} from './constants.js';
 import {Card} from './Card.js';
 import {FormValidator} from "./validate.js";
+import PopupWithImage from "./PopupWithImage.js";
+import PopupWithForm from "./PopupWithForm.js"
+import UserInfo from "./UserInfo.js"
+
 
 // список элементов картинок
 const gallery =".elements";
+const popupPhoto =".popup_photo-position";
 
 // кнопка редактирования профиля
 const profileButton = document.querySelector(".profile__edit-button");
@@ -24,8 +29,6 @@ const profilePopupDescription = popupProfile.querySelector('.popup__description'
 // элкменты попапа объектов галерии
 const popupPlace = document.querySelector(".popup_place");
 
-const popupPhoto = document.querySelector(".popup_photo-position")
-
 // валидация
 const formObject = {
     formElement: 'popup__form',
@@ -37,31 +40,6 @@ const formObject = {
 }
 
 
-const closePopup = popup => {
-    popup.classList.remove("popup_display-on")
-
-    removeListeners(popup);
-}
-
-
-const overlayClose = event => {
-    if (event.target !== event.currentTarget) return
-    const popup = event.target.closest(".popup");
-    closePopup(popup);
-}
-
-const escHandler = event => {
-    if (event.key === 'Escape') {
-        const activePopup = document.querySelector('.popup_display-on');
-        closePopup(activePopup);
-    }
-}
-
-const btnClosePopup = event => {
-    const popup = event.target.closest(".popup");
-    closePopup(popup);
-}
-
 const removeListeners = popup => {
     const closeBtn = popup.querySelector('.popup__close')
     popup.removeEventListener('submit', popupHandler)
@@ -70,78 +48,42 @@ const removeListeners = popup => {
     closeBtn.removeEventListener('click', btnClosePopup);
 }
 
-const addListeners = popup => {
-    const closeBtn = popup.querySelector('.popup__close')
-    popup.addEventListener('submit', popupHandler)
-    popup.addEventListener('click', overlayClose)
-    document.addEventListener('keydown', escHandler)
-    closeBtn.addEventListener('click', btnClosePopup)
+
+
+const handleCardClick = (event) => {
+    const imagePopup = new PopupWithImage(popupPhoto)
+    imagePopup.open(event)
+    imagePopup.setEventListeners()
 }
 
-
-const preparePhoto = (event, popup) => {
-    const image = popup.querySelector(".popup__image")
-    const title = event.target.closest('.element').querySelector('.element__caption').textContent
-    const imageTitle = popup.querySelector(".popup__photo-title")
-    image.src = event.target.src;
-    image.alt = event.target.alt
-    imageTitle.textContent = title
+const photoRender = (item) => {
+    const card = new Card(item, '#element-template', handleCardClick);
+    galleryArray.addItem(card.getView());
 }
-
-
-const profileDetermineFunction = (popup) => {
-    addListeners(popup)
-    popupOpen(popup)
-}
-
-const popupProfileAction = () => {
-    profileDetermineFunction(popupProfile)
-}
-
-const popupPlaceAction = () => {
-    profileDetermineFunction(popupPlace)
-}
-
-const popupPhotoAction = (event) => {
-    preparePhoto(event, popupPhoto)
-    profileDetermineFunction(popupPhoto)
-}
-
 
 const galleryArray = new Section({
-    items: initialCards,
-    renderer: (item)  => {
-        const card = new Card(item, '#element-template');
-        galleryArray.addItem(card.getView(popupPhotoAction));
-        }
+        items: initialCards,
+        renderer: (item)  => photoRender(item)
     },
     gallery,
 );
 
 galleryArray.renderElement()
 
-const getPopupValues = (popupInput) => {
-    profileName.textContent = popupInput.name;
-    profileDescription.textContent = popupInput.description;
-}
 
-const determineFunction = (data, popup) => {
-    if (popup.classList.contains('popup_fio')) return getPopupValues(data, popup)
-    if (popup.classList.contains('popup_place')) {render(data)}
-}
+const userInfo = new UserInfo({
+    profileName: ".profile__name",
+    profileDescription: ".popup__description"
+})
 
-const popupOpen = function (popup) {
-    popup.classList.add("popup_display-on");
-}
-
-
-const popupHandler = (event) => {
+const popupInfoHandler =  (event, data) => {
     event.preventDefault();
-    const popup = event.target.closest('.popup')
-    const formName = popup.querySelector(".popup__name");
-    const formDescription = popup.querySelector(".popup__description");
-    determineFunction(({'name' : formName.value, 'description' :formDescription.value}), popup);
-    closePopup(popup);
+    userInfo.setUserInfo(data)
+}
+
+const popupPlaceHandler =  (event, data) => {
+    event.preventDefault();
+    photoRender(data)
 }
 
 
@@ -150,12 +92,18 @@ const beforeOpen = () => {
     profilePopupDescription.value = profileDescription.textContent;
 }
 
-
 profileButton.addEventListener('click', () => {
-    beforeOpen()
-    popupProfileAction()
+    const popupForm = new PopupWithForm('.popup_fio', popupInfoHandler)
+    popupForm.open()
+    popupForm.setEventListeners()
 } );
-placeButton.addEventListener('click', popupPlaceAction);
+
+
+placeButton.addEventListener('click', () => {
+    const placePopup = new PopupWithForm('.popup_place', popupPlaceHandler)
+    placePopup.open()
+    placePopup.setEventListeners()
+});
 
 
 const validator = new FormValidator(formObject)

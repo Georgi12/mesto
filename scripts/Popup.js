@@ -1,49 +1,37 @@
 
-class Popup {
+export default class Popup {
     constructor(popupSelector) {
-        this._popupSelector = popupSelector
+        this._popup = document.querySelector(popupSelector)
+        this._closeBtn = this._popup.querySelector('.popup__close')
     }
 
     open() {
-
+        this._popup.classList.add("popup_display-on");
+        this._removeEventListeners()
     }
 
     close() {
+        this._popup.classList.remove("popup_display-on")
+    }
+
+    _removeEventListeners() {
+        this._closeBtn.removeEventListener('click', this.close.bind(this))
+        this._popup.removeEventListener('click', this._overlayClose.bind(this))
+        document.removeEventListener('keydown', this._handleEscClose.bind(this))
+    }
+
+    _handleEscClose(event) {
+        if (event.key === 'Escape') this.close();
 
     }
 
-    _handleEscClose() {
-
-    }
-
-    setEventListeners() {
-
-    }
-}
-
-
-class PopupWithImage extends Popup {
-    constructor() {
-        super();
-    }
-
-    open() {
-
-    }
-}
-
-
-class PopupWithForm extends  Popup {
-    constructor(callBackSubmit) {
-        super();
-        this._callBackSubmit = callBackSubmit
-    }
-
-    _getInputValues() {
-
+    _overlayClose(event) {
+        if (event.target !== event.currentTarget) return
+        this.close()
     }
     setEventListeners() {
-        super.setEventListeners()
-    //    + обработчик субмита
+        this._closeBtn.addEventListener('click', this.close.bind(this))
+        this._popup.addEventListener('click', this._overlayClose.bind(this))
+        document.addEventListener('keydown', this._handleEscClose.bind(this))
     }
 }

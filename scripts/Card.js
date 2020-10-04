@@ -2,11 +2,11 @@
 
 class Card {
 
-    constructor(data, template) {
+    constructor(data, template, popupHandler) {
         this._link = data.description;
         this._name = data.name;
         this._template = template
-
+        this._popupHandler = popupHandler
     }
 
     _delPlace = event => {
@@ -22,7 +22,7 @@ class Card {
         return template.cloneNode(true)
     }
 
-    getView(popupPhotoAction) {
+    getView() {
         this._element = this._getTemplate();
         const image = this._element.querySelector(".element__image");
         const caption = this._element.querySelector(".element__caption")
@@ -31,7 +31,7 @@ class Card {
         image.src = this._link;
         image.alt = this._name;
         caption.textContent = this._name;
-        image.addEventListener('click', popupPhotoAction);
+        image.addEventListener('click',  this._popupHandler);
         delButton.addEventListener('click', this._delPlace);
         likeButton.addEventListener('click', this._likeToggle)
         return this._element

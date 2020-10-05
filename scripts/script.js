@@ -7,27 +7,27 @@ import PopupWithForm from "./PopupWithForm.js"
 import UserInfo from "./UserInfo.js"
 
 
-// список элементов картинок
+// селектор галереи
 const gallery =".elements";
+
+// селектор размещения фото
 const popupPhoto =".popup_photo-position";
+
+// селекторы профиля
+const profileName = ".profile__name";
+const profileDescription = ".profile__description";
+
+// селектор попапа профиля
+const popupProfile = ".popup_fio";
+
+// селектор попапа галерии
+const popupPlace = ".popup_place";
 
 // кнопка редактирования профиля
 const profileButton = document.querySelector(".profile__edit-button");
 
 // кнопка добавления фото
 const placeButton = document.querySelector(".profile__add-button");
-
-// изменяемые поля профиля
-const profileName = document.querySelector(".profile__name");
-const profileDescription = document.querySelector(".profile__description");
-
-// элкменты попапа профиля
-const popupProfile = document.querySelector(".popup_fio");
-const profilePopupName = popupProfile.querySelector('.popup__name');
-const profilePopupDescription = popupProfile.querySelector('.popup__description');
-
-// элкменты попапа объектов галерии
-const popupPlace = document.querySelector(".popup_place");
 
 // валидация
 const formObject = {
@@ -39,19 +39,10 @@ const formObject = {
     buttonElementDisabled: 'popup__button_disabled'
 }
 
-
-const removeListeners = popup => {
-    const closeBtn = popup.querySelector('.popup__close')
-    popup.removeEventListener('submit', popupHandler)
-    popup.removeEventListener('click', overlayClose);
-    document.removeEventListener('keydown', escHandler);
-    closeBtn.removeEventListener('click', btnClosePopup);
-}
-
-
+const imagePopup = new PopupWithImage(popupPhoto)
 
 const handleCardClick = (event) => {
-    const imagePopup = new PopupWithImage(popupPhoto)
+
     imagePopup.open(event)
     imagePopup.setEventListeners()
 }
@@ -72,9 +63,13 @@ galleryArray.renderElement()
 
 
 const userInfo = new UserInfo({
-    profileName: ".profile__name",
-    profileDescription: ".popup__description"
+    profileName: profileName,
+    profileDescription: profileDescription,
 })
+
+const beforeOpen = () => {
+    return userInfo.getUserInfo()
+}
 
 const popupInfoHandler =  (event, data) => {
     event.preventDefault();
@@ -85,26 +80,18 @@ const popupPlaceHandler =  (event, data) => {
     event.preventDefault();
     photoRender(data)
 }
-
-
-const beforeOpen = () => {
-    profilePopupName.value = profileName.textContent;
-    profilePopupDescription.value = profileDescription.textContent;
-}
+const popupForm = new PopupWithForm(popupProfile, popupInfoHandler)
 
 profileButton.addEventListener('click', () => {
-    const popupForm = new PopupWithForm('.popup_fio', popupInfoHandler)
+    popupForm.setFormValue(beforeOpen())
     popupForm.open()
-    popupForm.setEventListeners()
 } );
 
+const placePopup = new PopupWithForm(popupPlace, popupPlaceHandler)
 
 placeButton.addEventListener('click', () => {
-    const placePopup = new PopupWithForm('.popup_place', popupPlaceHandler)
     placePopup.open()
-    placePopup.setEventListeners()
 });
-
 
 const validator = new FormValidator(formObject)
 validator.enableValidation()

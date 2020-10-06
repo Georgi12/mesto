@@ -38,6 +38,8 @@ const formObject = {
     buttonElement: 'popup__button',
     buttonElementDisabled: 'popup__button_disabled'
 }
+const validator = new FormValidator(formObject)
+
 
 const imagePopup = new PopupWithImage(popupPhoto)
 
@@ -80,18 +82,28 @@ const popupPlaceHandler =  (event, data) => {
     event.preventDefault();
     photoRender(data)
 }
-const popupForm = new PopupWithForm(popupProfile, popupInfoHandler)
+
+const closeHandler = (form) => {
+    validator.toggleButtonState(form)
+    validator.hideAllInputErrors(form)
+}
+
+
+const popupForm = new PopupWithForm(popupProfile, popupInfoHandler, closeHandler)
 
 profileButton.addEventListener('click', () => {
     popupForm.setFormValue(beforeOpen())
     popupForm.open()
 } );
 
-const placePopup = new PopupWithForm(popupPlace, popupPlaceHandler)
+const placePopup = new PopupWithForm(popupPlace, popupPlaceHandler, closeHandler)
 
 placeButton.addEventListener('click', () => {
     placePopup.open()
 });
 
-const validator = new FormValidator(formObject)
+
 validator.enableValidation()
+
+
+

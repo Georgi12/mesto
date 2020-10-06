@@ -1,13 +1,14 @@
 import Popup from "./Popup.js";
 
 export default class PopupWithForm extends  Popup {
-    constructor(popupSelector, callBackSubmit) {
+    constructor(popupSelector, callBackSubmit, closeHandler) {
         super(popupSelector);
         this._callBackSubmit = callBackSubmit
         this._form = this._popup.querySelector(".popup__form")
         this._callBack = this._submitCallBack.bind(this)
         this._name = this._popup.querySelector(".popup__name")
         this._description = this._popup.querySelector(".popup__description")
+        this._closeHandler = closeHandler
     }
 
     _removeEventListeners() {
@@ -34,7 +35,9 @@ export default class PopupWithForm extends  Popup {
     }
 
     close() {
-        this._form.reset()
+
         super.close();
+        this._form.reset();
+        this._closeHandler(this._form);
     }
 }

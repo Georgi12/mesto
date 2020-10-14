@@ -11,6 +11,10 @@ export default class PopupWithForm extends  Popup {
         this._closeHandler = closeHandler
     }
 
+    get_form() {
+        return this._form
+    }
+
     _removeEventListeners() {
         super._removeEventListeners()
         this._form.removeEventListener('submit', this._callBack)
@@ -41,9 +45,8 @@ export default class PopupWithForm extends  Popup {
     }
 
     close() {
-
         super.close();
         this._form.reset();
-        this._closeHandler(this._form);
+        this._closeHandler()
     }
 }

@@ -34,15 +34,12 @@ const placeButton = document.querySelector(".profile__add-button");
 
 // валидация
 const formObject = {
-    formElement: 'popup__form',
     inputElement: 'popup__input',
     inputsErrorClass: 'popup__input_type_error',
     errorVisible: 'popup__error_visible',
     buttonElement: 'popup__button',
     buttonElementDisabled: 'popup__button_disabled'
 }
-const validator = new FormValidator(formObject)
-
 
 const imagePopup = new PopupWithImage(popupPhoto)
 
@@ -86,24 +83,22 @@ const popupPlaceHandler =  (event, data) => {
     photoRender(data)
 }
 
-const closeHandler = (form) => {
-    validator.toggleButtonState(form)
-    validator.hideAllInputErrors(form)
-}
 
-
-const popupForm = new PopupWithForm(popupProfile, popupInfoHandler, closeHandler)
+const profilePopupForm = new PopupWithForm(popupProfile, popupInfoHandler)
+const profileValidator = new FormValidator(formObject, profilePopupForm.get_form())
 
 profileButton.addEventListener('click', () => {
-    popupForm.setFormValue(beforeOpen())
-    popupForm.open()
+    profilePopupForm.setFormValue(beforeOpen())
+    profilePopupForm.open()
 } );
 
-const placePopup = new PopupWithForm(popupPlace, popupPlaceHandler, closeHandler)
+const placePopup = new PopupWithForm(popupPlace, popupPlaceHandler)
+const placeValidator = new FormValidator(formObject, placePopup.get_form())
 
 placeButton.addEventListener('click', () => {
     placePopup.open()
 });
 
 
-validator.enableValidation()
+profileValidator.enableValidation()
+placeValidator.enableValidation()

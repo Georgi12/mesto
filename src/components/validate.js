@@ -17,7 +17,7 @@ class FormValidator {
     };
 
     hideAllInputErrors(formElement) {
-        const currentInputElements = this._get_input_list(formElement);
+        const currentInputElements = this._getInputList(formElement);
         currentInputElements.forEach(inputElement => {
             this._hideInputError(formElement, inputElement)
         })
@@ -25,7 +25,7 @@ class FormValidator {
 
 
     _hasInvalidInput(formElement) {
-        const inputList = this._get_input_list(formElement)
+        const inputList = this._getInputList(formElement)
         return inputList.some((inputElement) => {
             return !inputElement.validity.valid;
     })}
@@ -65,12 +65,12 @@ class FormValidator {
         }
     };
 
-    _get_input_list(formElement) {
+    _getInputList(formElement) {
         return Array.from(formElement.querySelectorAll(`.${this._inputElement}`))
     }
 
     _setEventListeners(formElement) {
-        const inputList = this._get_input_list(formElement);
+        const inputList = this._getInputList(formElement);
         this.toggleButtonState(formElement);
         inputList.forEach((inputField) => {
             inputField.addEventListener('input', () => {

@@ -107,6 +107,3 @@ placeButton.addEventListener('click', () => {
 
 
 validator.enableValidation()
-
-
-

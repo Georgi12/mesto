@@ -114,3 +114,6 @@ placeButton.addEventListener('click', () => {
 
 profileValidator.enableValidation()
 placeValidator.enableValidation()
+
+
+// Спасибо, за ревью, ничего страшного не произошло, я полагаю всегда можно договорится)

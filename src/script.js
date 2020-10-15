@@ -1,7 +1,7 @@
 import Section from "./components/Section.js";
 import {initialCards} from './components/constants.js';
 import {Card} from './components/Card.js';
-import {FormValidator} from "./components/validate.js";
+import {FormValidator} from "./components/FormValidator.js";
 import PopupWithImage from "./components/PopupWithImage.js";
 import PopupWithForm from "./components/PopupWithForm.js"
 import UserInfo from "./components/UserInfo.js"
@@ -87,15 +87,27 @@ const popupPlaceHandler =  (event, data) => {
 const profilePopupForm = new PopupWithForm(popupProfile, popupInfoHandler)
 const profileValidator = new FormValidator(formObject, profilePopupForm.get_form())
 
+const profileCloseHandler = () => {
+    profileValidator.toggleButtonState()
+    profileValidator.hideAllInputErrors()
+}
+
 profileButton.addEventListener('click', () => {
     profilePopupForm.setFormValue(beforeOpen())
+    profilePopupForm.setCloseHandler(profileCloseHandler)
     profilePopupForm.open()
 } );
 
 const placePopup = new PopupWithForm(popupPlace, popupPlaceHandler)
 const placeValidator = new FormValidator(formObject, placePopup.get_form())
 
+const placeCloseHandler = () => {
+    placeValidator.toggleButtonState()
+    placeValidator.hideAllInputErrors()
+}
+
 placeButton.addEventListener('click', () => {
+    placePopup.setCloseHandler(placeCloseHandler)
     placePopup.open()
 });
 

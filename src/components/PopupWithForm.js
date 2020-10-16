@@ -14,11 +14,6 @@ export default class PopupWithForm extends  Popup {
         return this._form
     }
 
-    _removeEventListeners() {
-        super._removeEventListeners()
-        this._form.removeEventListener('submit', this._callBack)
-    }
-
     _getInputValues() {
         this._inputList = this._form.querySelectorAll('.popup__input');
         this._formValues = {};

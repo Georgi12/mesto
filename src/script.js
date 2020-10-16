@@ -1,3 +1,4 @@
+import "./pages/index.css"
 import Section from "./components/Section.js";
 import {initialCards} from './components/constants.js';
 import {Card} from './components/Card.js';
@@ -5,7 +6,7 @@ import {FormValidator} from "./components/FormValidator.js";
 import PopupWithImage from "./components/PopupWithImage.js";
 import PopupWithForm from "./components/PopupWithForm.js"
 import UserInfo from "./components/UserInfo.js"
-import "./pages/index.css"
+
 
 
 console.log('loooj', location?.href)
@@ -115,5 +116,5 @@ placeButton.addEventListener('click', () => {
 profileValidator.enableValidation()
 placeValidator.enableValidation()
 
-
-// Спасибо, за ревью, ничего страшного не произошло, я полагаю всегда можно договорится)
+// Я плохо понял про закрытие попапа через колбэк, то есть мне надо написать специальный колбэк
+// внутри класса и вынести его script.js

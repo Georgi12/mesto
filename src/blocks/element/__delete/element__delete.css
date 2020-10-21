@@ -4,12 +4,12 @@
     background-color: transparent;
     background-position: center;
     background-size: contain;
-    position: relative;
-    display: none;
-    top: 40px;
+    position: absolute;
+    top: 20px;
     left: 249px;
     width: 18px;
     height: 19.3px;
+    display: none;
     align-self: center;
     background-repeat: no-repeat;
     border: none;

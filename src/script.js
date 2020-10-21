@@ -1,15 +1,13 @@
 import "./pages/index.css"
 import Section from "./components/Section.js";
-import {initialCards} from './components/constants.js';
+import {initialCards, group, token, baseUrl} from './components/constants.js';
 import {Card} from './components/Card.js';
 import {FormValidator} from "./components/FormValidator.js";
 import PopupWithImage from "./components/PopupWithImage.js";
 import PopupWithForm from "./components/PopupWithForm.js"
 import UserInfo from "./components/UserInfo.js"
+import {Api} from "./components/Api.js"
 
-
-
-console.log('loooj', location?.href)
 
 // селектор галереи
 const gallery =".elements";
@@ -20,9 +18,12 @@ const popupPhoto =".popup_photo-position";
 // селекторы профиля
 const profileName = ".profile__name";
 const profileDescription = ".profile__description";
+const avatar = ".profile__avatar"
+const avatarNode = document.querySelector('.profile__avatar')
 
 // селектор попапа профиля
 const popupProfile = ".popup_fio";
+const popupAvatar = ".popup_avatar"
 
 // селектор попапа галерии
 const popupPlace = ".popup_place";
@@ -42,6 +43,25 @@ const formObject = {
     buttonElementDisabled: 'popup__button_disabled'
 }
 
+const api = new Api({baseUrl: `${baseUrl}/${group}`, token: token})
+
+const userInfo = new UserInfo({
+    profileName: profileName,
+    profileDescription: profileDescription,
+    avatar: avatar,
+})
+
+
+api.getProfileInfo()
+    .then(data => {
+        return userInfo.setUserInfo(data)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+
+
+
 const imagePopup = new PopupWithImage(popupPhoto)
 
 const handleCardClick = (event) => {
@@ -55,8 +75,12 @@ const photoRender = (item) => {
     galleryArray.addItem(card.getView());
 }
 
+const galleryApi = () => {
+    return api.getCards()
+}
+
 const galleryArray = new Section({
-        items: initialCards,
+        api: galleryApi,
         renderer: (item)  => photoRender(item)
     },
     gallery,
@@ -65,13 +89,14 @@ const galleryArray = new Section({
 galleryArray.renderElement()
 
 
-const userInfo = new UserInfo({
-    profileName: profileName,
-    profileDescription: profileDescription,
-})
 
 const beforeOpen = () => {
     return userInfo.getUserInfo()
+}
+
+const popupAvatarHandler = (event, data) => {
+    event.preventDefault();
+    userInfo.setUserInfo(data)
 }
 
 const popupInfoHandler =  (event, data) => {
@@ -84,37 +109,58 @@ const popupPlaceHandler =  (event, data) => {
     photoRender(data)
 }
 
+function popupFactory(popupClass, submitHandler, button, api, beforeOpen, beforeOpenFlag=false) {
+    const popup = new PopupWithForm(popupClass, submitHandler, api, beforeOpen)
+    const validator = new FormValidator(formObject, popup.get_form())
 
-const profilePopupForm = new PopupWithForm(popupProfile, popupInfoHandler)
-const profileValidator = new FormValidator(formObject, profilePopupForm.get_form())
+    const avatarCloseHandler = () => {
+        validator.toggleButtonState()
+        validator.hideAllInputErrors()
+    }
 
-const profileCloseHandler = () => {
-    profileValidator.toggleButtonState()
-    profileValidator.hideAllInputErrors()
+    button.addEventListener('click', () => {
+        popup.setCloseHandler(avatarCloseHandler)
+        if(beforeOpenFlag) {
+            popup.setFormValue()
+        }
+        popup.open()
+    } );
+    validator.enableValidation()
+    return popup
 }
 
-profileButton.addEventListener('click', () => {
-    profilePopupForm.setFormValue(beforeOpen())
-    profilePopupForm.setCloseHandler(profileCloseHandler)
-    profilePopupForm.open()
-} );
-
-const placePopup = new PopupWithForm(popupPlace, popupPlaceHandler)
-const placeValidator = new FormValidator(formObject, placePopup.get_form())
-
-const placeCloseHandler = () => {
-    placeValidator.toggleButtonState()
-    placeValidator.hideAllInputErrors()
+const saveAvatarApi = (event, data) => {
+    event.preventDefault();
+    api.setAvatarInfo(data)
+        .then(data => {
+            userInfo.setUserInfo(data)
+        })
+        .catch()
 }
 
-placeButton.addEventListener('click', () => {
-    placePopup.setCloseHandler(placeCloseHandler)
-    placePopup.open()
-});
+popupFactory(popupAvatar, popupAvatarHandler, avatarNode, saveAvatarApi, beforeOpen)
+
+const savePlaceApi = (event, data) => {
+    event.preventDefault();
+    api.setProfileInfo(data)
+        .then(data => {
+            userInfo.setUserInfo(data)
+        })
+        .catch()
+}
 
 
-profileValidator.enableValidation()
-placeValidator.enableValidation()
+popupFactory(popupPlace, popupPlaceHandler, placeButton, api, beforeOpen)
 
-// Я плохо понял про закрытие попапа через колбэк, то есть мне надо написать специальный колбэк
-// внутри класса и вынести его script.js
+
+const saveProfileApi = (event, data) => {
+    event.preventDefault();
+    api.setProfileInfo(data)
+        .then(data => {
+            userInfo.setUserInfo(data)
+        })
+        .catch()
+}
+
+popupFactory(popupProfile, popupInfoHandler, profileButton, saveProfileApi, beforeOpen, true)
+

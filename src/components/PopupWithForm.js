@@ -1,31 +1,32 @@
 import Popup from "./Popup.js";
 
 export default class PopupWithForm extends  Popup {
-    constructor(popupSelector, callBackSubmit) {
+    constructor(popupSelector, callBackSubmit, apiMethod, beforeOpen) {
         super(popupSelector);
-        this._callBackSubmit = callBackSubmit
-        this._form = this._popup.querySelector(".popup__form")
-        this._callBack = this._submitCallBack.bind(this)
-        this._name = this._popup.querySelector(".popup__name")
-        this._description = this._popup.querySelector(".popup__description")
+        this._callBackSubmit = callBackSubmit;
+        this._apiMethod = apiMethod;
+        this._beforeOpen = beforeOpen;
+        this._form = this._popup.querySelector(".popup__form");
+        this._callBack = this._submitCallBack.bind(this);
+        this._name = this._popup.querySelector(".popup__name");
+        this._inputList = this._form.querySelectorAll('.popup__input');
+
     }
 
     get_form() {
         return this._form
     }
 
-    _getInputValues() {
-        this._inputList = this._form.querySelectorAll('.popup__input');
-        this._formValues = {};
-
+    _getUpdateInputValues() {
+        const formValues = this._beforeOpen();
         this._inputList.forEach(input => {
-            this._formValues[input.name] = input.value;
+            formValues[input.name] = input.value;
         });
-        return this._formValues
+        return formValues
     }
 
     _submitCallBack(event) {
-        this._callBackSubmit(event, this._getInputValues());
+        this._apiMethod(event, this._getUpdateInputValues());
         this.close();
     }
     setEventListeners() {
@@ -37,9 +38,11 @@ export default class PopupWithForm extends  Popup {
         this._closeHandler = closeHandler
     }
 
-    setFormValue({profileName, profileDescription}) {
-        this._name.value = profileName
-        this._description.value = profileDescription
+    setFormValue() {
+        const data = this._beforeOpen()
+        this._inputList.forEach(input => {
+            input.value = data[input.name]
+        })
     }
 
     close() {

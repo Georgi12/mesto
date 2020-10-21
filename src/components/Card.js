@@ -3,7 +3,7 @@
 class Card {
 
     constructor(data, template, popupHandler) {
-        this._link = data.description;
+        this._link = data.link;
         this._name = data.name;
         this._template = template
         this._popupHandler = popupHandler

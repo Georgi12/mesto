@@ -17,8 +17,16 @@ export class Api {
     }
 
 
+    delCard(card_id) {
+        return fetch(`${this._baseUrl}/cards/${card_id}`, {
+            headers: this.headers,
+            method: 'DELETE',
+        }).then(res => this._queryHandler(res))
+    }
+
+
     setCard(data) {
-        return fetch(`${this._baseUrl}/users/me/avatar`, {
+        return fetch(`${this._baseUrl}/cards`, {
             headers: this.headers,
             method: 'POST',
             body: JSON.stringify(data)

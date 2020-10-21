@@ -2,16 +2,20 @@
 
 class Card {
 
-    constructor(data, template, popupHandler) {
+    constructor(data, template, popupHandler, userInfo, api, popupFactory, deletePopup) {
         this._link = data.link;
         this._name = data.name;
+        this.photo_id = data._id;
+        this._ownerId = data.owner._id;
         this._template = template
         this._popupHandler = popupHandler
+        this._userInfo = userInfo
+        this._api = api
+        this._popupFactory = popupFactory
+        this._deletePopup = deletePopup
+
     }
 
-    _delPlace(event)  {
-        event.target.closest(".element").remove()
-    }
 
     _likeToggle(event) {
         event.target.classList.toggle("element_active-like");
@@ -19,7 +23,15 @@ class Card {
 
     _getTemplate() {
         const template =  document.querySelector(this._template).content
-        return template.cloneNode(true)
+        return template.cloneNode(true).querySelector(".element")
+    }
+
+    _deleteCardApi() {
+        this._api.delCard(this.photo_id)
+            .then(() => {
+                this._element.remove()
+            })
+            .catch(err => console.log(err))
     }
 
     getView() {
@@ -32,8 +44,13 @@ class Card {
         image.alt = this._name;
         caption.textContent = this._name;
         image.addEventListener('click',  this._popupHandler);
-        delButton.addEventListener('click', this._delPlace);
         likeButton.addEventListener('click', this._likeToggle)
+        if(this._userInfo().userId === this._ownerId) {
+
+            delButton.removeAttribute('disabled')
+            delButton.style.display = "block"
+            this._popupFactory(this._deletePopup, delButton, this._deleteCardApi.bind(this), this._userInfo)
+        }
         return this._element
     }
 

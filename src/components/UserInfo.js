@@ -10,15 +10,16 @@ export default  class UserInfo {
         return {
             name: this._profileName.textContent,
             about: this._profileDescription.textContent,
-            avatar: this._profileAvatar.style.backgroundImage
+            avatar: this._profileAvatar.style.backgroundImage,
+            userId: this._id
         }
 
     }
-
 
     setUserInfo(data) {
         this._profileName.textContent = data.name;
         this._profileDescription.textContent = data.about;
         this._profileAvatar.style.backgroundImage = `url(${data.avatar})`;
+        this._id = data._id
     }
 }

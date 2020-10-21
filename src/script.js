@@ -1,6 +1,6 @@
 import "./pages/index.css"
 import Section from "./components/Section.js";
-import {initialCards, group, token, baseUrl} from './components/constants.js';
+import {group, token, baseUrl} from './components/constants.js';
 import {Card} from './components/Card.js';
 import {FormValidator} from "./components/FormValidator.js";
 import PopupWithImage from "./components/PopupWithImage.js";
@@ -23,7 +23,8 @@ const avatarNode = document.querySelector('.profile__avatar')
 
 // селектор попапа профиля
 const popupProfile = ".popup_fio";
-const popupAvatar = ".popup_avatar"
+const popupAvatar = ".popup_avatar";
+const popupDelete = ".popup_delete";
 
 // селектор попапа галерии
 const popupPlace = ".popup_place";
@@ -51,7 +52,6 @@ const userInfo = new UserInfo({
     avatar: avatar,
 })
 
-
 api.getProfileInfo()
     .then(data => {
         return userInfo.setUserInfo(data)
@@ -60,7 +60,9 @@ api.getProfileInfo()
         console.log(err)
     })
 
-
+const getUserInfo = () => {
+    return userInfo.getUserInfo()
+}
 
 const imagePopup = new PopupWithImage(popupPhoto)
 
@@ -70,17 +72,18 @@ const handleCardClick = (event) => {
     imagePopup.setEventListeners()
 }
 
+
 const photoRender = (item) => {
-    const card = new Card(item, '#element-template', handleCardClick);
+    const card = new Card(item, '#element-template', handleCardClick, getUserInfo, api, popupFactory, popupDelete);
     galleryArray.addItem(card.getView());
 }
 
-const galleryApi = () => {
+const doGalleryApiGet = () => {
     return api.getCards()
 }
 
 const galleryArray = new Section({
-        api: galleryApi,
+        api: doGalleryApiGet,
         renderer: (item)  => photoRender(item)
     },
     gallery,
@@ -89,28 +92,8 @@ const galleryArray = new Section({
 galleryArray.renderElement()
 
 
-
-const beforeOpen = () => {
-    return userInfo.getUserInfo()
-}
-
-const popupAvatarHandler = (event, data) => {
-    event.preventDefault();
-    userInfo.setUserInfo(data)
-}
-
-const popupInfoHandler =  (event, data) => {
-    event.preventDefault();
-    userInfo.setUserInfo(data)
-}
-
-const popupPlaceHandler =  (event, data) => {
-    event.preventDefault();
-    photoRender(data)
-}
-
-function popupFactory(popupClass, submitHandler, button, api, beforeOpen, beforeOpenFlag=false) {
-    const popup = new PopupWithForm(popupClass, submitHandler, api, beforeOpen)
+function popupFactory(popupClass, button, api, userInfo, beforeOpenFlag=false) {
+    const popup = new PopupWithForm(popupClass, api, userInfo)
     const validator = new FormValidator(formObject, popup.get_form())
 
     const avatarCloseHandler = () => {
@@ -124,7 +107,7 @@ function popupFactory(popupClass, submitHandler, button, api, beforeOpen, before
             popup.setFormValue()
         }
         popup.open()
-    } );
+    });
     validator.enableValidation()
     return popup
 }
@@ -138,19 +121,19 @@ const saveAvatarApi = (event, data) => {
         .catch()
 }
 
-popupFactory(popupAvatar, popupAvatarHandler, avatarNode, saveAvatarApi, beforeOpen)
+popupFactory(popupAvatar, avatarNode, saveAvatarApi, getUserInfo)
+
 
 const savePlaceApi = (event, data) => {
     event.preventDefault();
-    api.setProfileInfo(data)
+    api.setCard(data)
         .then(data => {
-            userInfo.setUserInfo(data)
+            photoRender(data)
         })
         .catch()
 }
 
-
-popupFactory(popupPlace, popupPlaceHandler, placeButton, api, beforeOpen)
+popupFactory(popupPlace, placeButton, savePlaceApi, getUserInfo)
 
 
 const saveProfileApi = (event, data) => {
@@ -161,6 +144,5 @@ const saveProfileApi = (event, data) => {
         })
         .catch()
 }
-
-popupFactory(popupProfile, popupInfoHandler, profileButton, saveProfileApi, beforeOpen, true)
+popupFactory(popupProfile, profileButton, saveProfileApi, getUserInfo, true)
 

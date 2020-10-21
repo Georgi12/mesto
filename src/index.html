@@ -57,7 +57,7 @@
                 <h2 class="popup__title">Новое место</h2>
                 <input id="place-name" type="text" minlength="1" maxlength="30" class="popup__input popup__name" name="name" placeholder="Название" required>
                 <span class="popup__error" id="place-name-error"></span>
-                <input id="place-link" type="url" class="popup__input popup__description" name="description" placeholder="Ссылка на картинку" required>
+                <input id="place-link" type="url" class="popup__input popup__description" name="link" placeholder="Ссылка на картинку" required>
                 <span class="popup__error" id="place-link-error"></span>
                 <button type="submit" class="popup__button">Сохранить</button>
             </form>
@@ -69,11 +69,27 @@
                 <h2 class="popup__photo-title"></h2>
             </div>
         </div>
+
+        <div class="popup popup_delete">
+            <form class="popup__form" name="place-popup" novalidate>
+                <button type="button" class="popup__close" aria-label="Закрыть попап"></button>
+                <h2 class="popup__title">Вы уверены?</h2>
+                <button type="submit" class="popup__button">Да</button>
+            </form>
+        </div>
+
+        <div class="popup popup_error">
+            <form class="popup__form" name="place-popup" novalidate>
+                <button type="button" class="popup__close" aria-label="Закрыть попап"></button>
+                <h2 class="popup__title">Пролизошла ошибка</h2>
+                <button type="submit" class="popup__button">Да</button>
+            </form>
+        </div>
         
         
         <template id="element-template">
             <article class="element">
-                <button type="button" class="element__delete"></button>
+                <button type="button" class="element__delete" disabled></button>
                 <img class="element__image" src="#" alt="">
                 <div class="element__description">
                     <h2 class="element__caption"></h2>

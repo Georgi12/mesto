@@ -16,6 +16,19 @@ export class Api {
         }
     }
 
+    apiLike(card_id) {
+        return fetch(`${this._baseUrl}/cards/likes/${card_id}`, {
+            headers: this.headers,
+            method: 'PUT',
+        }).then(res => this._queryHandler(res))
+    }
+
+    apiUnLike(card_id) {
+        return fetch(`${this._baseUrl}/cards/likes/${card_id}`, {
+            headers: this.headers,
+            method: 'DELETE',
+        }).then(res => this._queryHandler(res))
+    }
 
     delCard(card_id) {
         return fetch(`${this._baseUrl}/cards/${card_id}`, {

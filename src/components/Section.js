@@ -10,6 +10,12 @@ export default class Section {
     renderElement() {
         this._api()
             .then(items => {
+                items.sort(function(a, b) {
+                    const dateA = new Date(a.createdAt)
+                    const dateB= new Date(b.createdAt)
+                    return dateA - dateB
+                    }
+                )
                 return items.forEach(item => this._renderer(item));
             })
             .catch(err => {

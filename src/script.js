@@ -52,13 +52,34 @@ const userInfo = new UserInfo({
     avatar: avatar,
 })
 
-api.getProfileInfo()
-    .then(data => {
-        return userInfo.setUserInfo(data)
+const galleryArray = new Section(
+    {renderer: (item)  => photoRender(item)},
+    gallery,
+);
+
+const photoRender = (item) => {
+    const card = new Card(item, '#element-template', handleCardClick, getUserInfo, api, popupFactory, popupDelete);
+    galleryArray.addItem(card.getView());
+}
+
+
+const renderCards = (initialCards) => {
+    galleryArray.renderElement(initialCards)
+}
+
+
+Promise.all([
+    api.getProfileInfo(),
+    api.getCards(),
+])
+    .then(([userData, initialCards]) => {
+        userInfo.setUserInfo(userData)
+        renderCards(initialCards)
     })
-    .catch(err => {
-        console.log(err)
-    })
+    .catch((err) => {
+        console.log(err);
+    });
+
 
 const getUserInfo = () => {
     return userInfo.getUserInfo()
@@ -71,25 +92,6 @@ const handleCardClick = (event) => {
     imagePopup.open(event)
     imagePopup.setEventListeners()
 }
-
-
-const photoRender = (item) => {
-    const card = new Card(item, '#element-template', handleCardClick, getUserInfo, api, popupFactory, popupDelete);
-    galleryArray.addItem(card.getView());
-}
-
-const doGalleryApiGet = () => {
-    return api.getCards()
-}
-
-const galleryArray = new Section({
-        api: doGalleryApiGet,
-        renderer: (item)  => photoRender(item)
-    },
-    gallery,
-);
-
-galleryArray.renderElement()
 
 
 function popupFactory(popupClass, button, api, userInfo, beforeOpenFlag=false) {

@@ -1,26 +1,18 @@
 
 
 export default class Section {
-    constructor({api, renderer}, nodeSelector) {
-        this._api = api;
+    constructor({renderer}, nodeSelector) {
         this._renderer = renderer;
         this._node = document.querySelector(nodeSelector);
     }
 
-    renderElement() {
-        this._api()
-            .then(items => {
-                items.sort(function(a, b) {
-                    const dateA = new Date(a.createdAt)
-                    const dateB= new Date(b.createdAt)
-                    return dateA - dateB
-                    }
-                )
-                return items.forEach(item => this._renderer(item));
-            })
-            .catch(err => {
-                console.log(err)
-            })
+    renderElement(initialCards) {
+        initialCards.sort(function(a, b) {
+            const dateA = new Date(a.createdAt)
+            const dateB= new Date(b.createdAt)
+            return dateA - dateB
+        })
+        initialCards.forEach(item => this._renderer(item));
     }
 
     addItem(element) {

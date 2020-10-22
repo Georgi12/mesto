@@ -16,7 +16,6 @@ class Card {
         this._bindcheckMethod = this._checkMethod.bind(this)
     }
 
-
     _checkMethod(element) {
         return element._id === this._userInfo().userId
     }
@@ -46,12 +45,7 @@ class Card {
                 })
                 .catch(err => console.log(err))
         }
-
-
-
     }
-
-
 
     _updateLike() {
         this._likeButton.classList.toggle("element_active-like")
@@ -71,10 +65,11 @@ class Card {
         return template.cloneNode(true).querySelector(".element")
     }
 
-    _deleteCardApi() {
+    _deleteCardApi(event, data, close, button) {
         this._api.delCard(this.photo_id)
             .then(() => {
                 this._element.remove()
+                close()
             })
             .catch(err => console.log(err))
     }

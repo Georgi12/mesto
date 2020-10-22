@@ -114,11 +114,13 @@ function popupFactory(popupClass, button, api, userInfo, beforeOpenFlag=false) {
     return popup
 }
 
-const saveAvatarApi = (event, data) => {
+const saveAvatarApi = (event, data, close, button) => {
     event.preventDefault();
+    button.textContent = 'Сохранение...'
     api.setAvatarInfo(data)
         .then(data => {
             userInfo.setUserInfo(data)
+            close()
         })
         .catch()
 }
@@ -126,11 +128,13 @@ const saveAvatarApi = (event, data) => {
 popupFactory(popupAvatar, avatarNode, saveAvatarApi, getUserInfo)
 
 
-const savePlaceApi = (event, data) => {
+const savePlaceApi = (event, data, close, button) => {
     event.preventDefault();
+    button.textContent = 'Сохранение...'
     api.setCard(data)
         .then(data => {
             photoRender(data)
+            close()
         })
         .catch()
 }
@@ -138,11 +142,13 @@ const savePlaceApi = (event, data) => {
 popupFactory(popupPlace, placeButton, savePlaceApi, getUserInfo)
 
 
-const saveProfileApi = (event, data) => {
+const saveProfileApi = (event, data, close, button) => {
     event.preventDefault();
+    button.textContent = 'Сохранение...'
     api.setProfileInfo(data)
         .then(data => {
             userInfo.setUserInfo(data)
+            close()
         })
         .catch()
 }

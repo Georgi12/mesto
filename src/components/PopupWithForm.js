@@ -8,6 +8,9 @@ export default class PopupWithForm extends  Popup {
         this._form = this._popup.querySelector(".popup__form");
         this._callBack = this._submitCallBack.bind(this);
         this._inputList = this._form.querySelectorAll('.popup__input');
+        this.bindClose = this.close.bind(this)
+        this._button =  this._popup.querySelector(".popup__button");
+        this._buttonTitle = this._button.textContent
     }
 
     get_form() {
@@ -23,8 +26,7 @@ export default class PopupWithForm extends  Popup {
     }
 
     _submitCallBack(event) {
-        this._apiMethod(event, this._getUpdateInputValues());
-        this.close();
+        this._apiMethod(event, this._getUpdateInputValues(), this.bindClose, this._button);
     }
     setEventListeners() {
         super.setEventListeners()
@@ -46,5 +48,6 @@ export default class PopupWithForm extends  Popup {
         super.close();
         this._form.reset();
         this._closeHandler()
+        this._button.textContent = this._buttonTitle
     }
 }
